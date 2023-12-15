@@ -36,66 +36,61 @@ export const Login = ({ setToken, setCurrentUserId }) => {
 				</button>
 			</dialog>
 
-			<div
-				className={
-					"fixed flex justify-center content-around text-center h-screen w-screen bg-cover"
-				}>
-				<section
-					className={
-						"grid fixed w-3/4 h-2/5 top-1/4 content-center bg-green-100 border-black bg-opacity-70 border-4 rounded-2xl shadow-md"
-					}>
-					<form className="my-3 mx-5" onSubmit={handleLogin}>
-						<h1 className="text-5xl m-3 pb-3">Venue</h1>
-						<h2 className="text-3xl m-2 p-1">Please sign in</h2>
-						<fieldset className="mb-4">
-							<div className="form-group">
-								<label className="label">Username</label>
-								<div className="control">
-									<input
-										id="inputUsername"
-										type="text"
-										ref={username}
-										className="p-1 rounded-md shadow placeholder:italic border border-slate-400 focus:border-sky-500"
-										placeholder="Username"
-										required
-										autoFocus
-									/>
-								</div>
-							</div>
-						</fieldset>
-						<fieldset>
-							<div className="field">
-								<label className="label">Password</label>
-								<div className="control">
-									<input
-										id="inputPassword"
-										type="text"
-										ref={password}
-										className="p-1 rounded-md shadow placeholder:italic border border-slate-400 focus:border-sky-500"
-										placeholder="Password"
-										required
-										autoFocus
-									/>
-								</div>
-							</div>
-						</fieldset>
-						<div className="">
-							<div className="">
-								<button
-									className="outline-1 bg-green-600 transition-color hover:bg-green-400  duration-200 delay-50"
-									type="submit">
-									Submit
-								</button>
-							</div>
-							<div className="">
-								<Link to="/register" className="">
-									Not a Concert Goer Yet?
-								</Link>
+			<section className="text-center justify-center">
+				<h1 className="text-5xl m-3 pb-3">Venue</h1>
+				<form
+					className="mx-auto w-2/3 text-center content-center justify-center bg-green-100
+				bg-opacity-70 py-3 rounded-xl border-black border-4 shadow-lg"
+					onSubmit={handleLogin}>
+					<h2 className="text-4xl my-3">Please sign in</h2>
+					<fieldset className="m-1">
+						<div className="form-group">
+							<label className="label">Username</label>
+							<div className="control">
+								<input
+									id="inputUsername"
+									type="text"
+									ref={username}
+									className="p-1 rounded-md shadow placeholder:italic border border-slate-400 focus:border-sky-500"
+									placeholder="Username"
+									required
+									autoFocus
+								/>
 							</div>
 						</div>
-					</form>
-				</section>
-			</div>
+					</fieldset>
+					<fieldset>
+						<div className="field">
+							<label className="label">Password</label>
+							<div className="control">
+								<input
+									id="inputPassword"
+									type="text"
+									ref={password}
+									className="p-1 rounded-md shadow placeholder:italic border border-slate-400 focus:border-sky-500"
+									placeholder="Password"
+									required
+									autoFocus
+								/>
+							</div>
+						</div>
+					</fieldset>
+					<div className="">
+						<div className="">
+							<button
+								className="px-1 py-0.5 my-1 bg-green-600 border-black border-2 rounded-lg transition-color hover:bg-green-400 duration-200 delay-50"
+								type="submit">
+								Submit
+							</button>
+						</div>
+						<div className="">
+							<Link to="/register" className="">
+								Not a Concert Goer Yet?
+							</Link>
+						</div>
+					</div>
+				</form>
+			</section>
 		</main>
 	)
 }
