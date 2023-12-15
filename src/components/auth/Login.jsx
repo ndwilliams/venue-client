@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { loginUser } from "../../managers/AuthManager"
 
@@ -6,7 +6,7 @@ export const Login = ({ setToken, setCurrentUserId }) => {
 	const username = useRef()
 	const password = useRef()
 	const navigate = useNavigate()
-	const [isUnsuccessful, setisUnsuccessful] = useState(false)
+	const Dialog = useRef()
 
 	const handleLogin = (e) => {
 		e.preventDefault()
@@ -22,49 +22,80 @@ export const Login = ({ setToken, setCurrentUserId }) => {
 				setCurrentUserId(res.user_id)
 				navigate("/")
 			} else {
-				setisUnsuccessful(true)
+				Dialog.current.showModal()
 			}
 		})
 	}
 
 	return (
-		<section className="columns is-centered">
-			<form className="column is-two-thirds" onSubmit={handleLogin}>
-				<h1 className="title">Venue</h1>
-				<p className="subtitle">Please sign in</p>
+		<main>
+			<dialog className="dialog dialog--auth" ref={Dialog}>
+				<div>Username or Password is not valid</div>
+				<button className="close" onClick={() => Dialog.current.close()}>
+					Close
+				</button>
+			</dialog>
 
-				<div className="field">
-					<label className="label">Username</label>
-					<div className="control">
-						<input className="input" type="text" ref={username} />
-					</div>
-				</div>
-
-				<div className="field">
-					<label className="label">Password</label>
-					<div className="control">
-						<input className="input" type="password" ref={password} />
-					</div>
-				</div>
-
-				<div className="field is-grouped">
-					<div className="control">
-						<button className="button is-link" type="submit">
-							Submit
-						</button>
-					</div>
-					<div className="control">
-						<Link to="/register" className="button is-link is-light">
-							Cancel
-						</Link>
-					</div>
-				</div>
-				{isUnsuccessful ? (
-					<p className="help is-danger">Username or password not valid</p>
-				) : (
-					""
-				)}
-			</form>
-		</section>
+			<div
+				className={
+					"fixed flex justify-center content-around text-center h-screen w-screen bg-cover"
+				}>
+				<section
+					className={
+						"grid fixed w-3/4 h-2/5 top-1/4 content-center bg-green-100 border-black bg-opacity-70 border-4 rounded-2xl shadow-md"
+					}>
+					<form className="my-3 mx-5" onSubmit={handleLogin}>
+						<h1 className="text-5xl m-3 pb-3">Venue</h1>
+						<h2 className="text-3xl m-2 p-1">Please sign in</h2>
+						<fieldset className="mb-4">
+							<div className="form-group">
+								<label className="label">Username</label>
+								<div className="control">
+									<input
+										id="inputUsername"
+										type="text"
+										ref={username}
+										className="p-1 rounded-md shadow placeholder:italic border border-slate-400 focus:border-sky-500"
+										placeholder="Username"
+										required
+										autoFocus
+									/>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<div className="field">
+								<label className="label">Password</label>
+								<div className="control">
+									<input
+										id="inputPassword"
+										type="text"
+										ref={password}
+										className="p-1 rounded-md shadow placeholder:italic border border-slate-400 focus:border-sky-500"
+										placeholder="Password"
+										required
+										autoFocus
+									/>
+								</div>
+							</div>
+						</fieldset>
+						<div className="">
+							<div className="">
+								<button
+									className="outline-1 bg-green-600 transition-color hover:bg-green-400  duration-200 delay-50"
+									type="submit">
+									Submit
+								</button>
+							</div>
+							<div className="">
+								<Link to="/register" className="">
+									Not a Concert Goer Yet?
+								</Link>
+							</div>
+						</div>
+					</form>
+				</section>
+			</div>
+		</main>
 	)
 }
