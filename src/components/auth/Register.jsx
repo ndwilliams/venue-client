@@ -37,51 +37,51 @@ export const Register = ({ setToken }) => {
 	}
 
 	return (
-		<section className="fixed flex content-around justify-center text-center h-screen w-screen bg-cover">
-			<form
-				className="grid fixed bg-green-100 bg-opacity-70 w-3/4 h-1/2 top-1/4 content-around rounded-xl border-black border-4 shadow-lg"
-				onSubmit={handleRegister}>
-				<h1 className="text-5xl my-2 -mb-2 p-1">Venue</h1>
-				<p className="text-4xl my-3">Create an account</p>
+		<section className="text-center justify-center">
+			<h1 className="text-5xl m-4 p-4">Venue</h1>
 
-				<label className="label">First Name</label>
-				<fieldset className="-m-1">
-					<input className="input" type="text" ref={firstName} />
+			<form
+				className="mx-auto w-2/3 text-center content-center justify-center bg-green-100
+				bg-opacity-70 py-3 rounded-xl border-black border-4 shadow-lg"
+				onSubmit={handleRegister}>
+				<h2 className="text-4xl my-3">Create an account</h2>
+				<label className="">First Name</label>
+				<fieldset className="m-1">
+					<input className="input rounded-md" type="text" ref={firstName} />
 				</fieldset>
 
 				<label className="label">Last Name</label>
-				<fieldset className="-m-1">
-					<input className="input" type="text" ref={lastName} />
+				<fieldset className="m-1">
+					<input className="input rounded-md" type="text" ref={lastName} />
 				</fieldset>
 
 				<label className="label">Username</label>
-				<fieldset className="-m-1">
-					<input className="input" type="text" ref={username} />
+				<fieldset className="m-1">
+					<input className="input rounded-md" type="text" ref={username} />
 				</fieldset>
 
 				<label className="label">Email</label>
-				<fieldset className="-m-1">
-					<input className="input" type="email" ref={email} />
+				<fieldset className="m-1">
+					<input className="input rounded-md" type="email" ref={email} />
 				</fieldset>
 
 				<label className="label">Password</label>
 				<div className="field-body">
-					<fieldset className="-m-1">
-						<p className="control is-expanded">
+					<fieldset className="m-1">
+						<p className="control is-expanded p-2">
 							<input
-								className="input"
+								className="input rounded-md"
 								type="password"
-								placeholder="Password"
 								ref={password}
 							/>
 						</p>
 					</fieldset>
+					<label className="label">Verify Password</label>
 					<fieldset>
-						<p className="control is-expanded">
+						<p className="control is-expanded p-2">
 							<input
-								className="input"
+								className="input rounded-md"
 								type="password"
-								placeholder="Verify Password"
 								ref={verifyPassword}
 							/>
 						</p>
@@ -90,7 +90,7 @@ export const Register = ({ setToken }) => {
 
 				<div className="control">
 					<button
-						className="outline-1 bg-green-600 transition-color hover:bg-green-400 duration-200 delay-50"
+						className="outline-1 px-1 py-0.5 my-1 bg-green-600 border-black border-2 rounded-lg transition-color hover:bg-green-400 duration-200 delay-50"
 						type="submit">
 						Submit
 					</button>
@@ -98,7 +98,7 @@ export const Register = ({ setToken }) => {
 				<div className="control">
 					<Link
 						to="/login"
-						className="outline-1 bg-green-600 transition-color hover:bg-green-400 duration-200 delay-50">
+						className="outline-1 px-1 py-0.5 my-1 border-black border-2 rounded-lg bg-green-600 transition-color hover:bg-green-400 duration-200 delay-50">
 						Cancel
 					</Link>
 				</div>
