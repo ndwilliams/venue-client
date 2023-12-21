@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import { Login } from "../components/auth/Login"
 import { Register } from "../components/auth/Register"
 import { Authorized } from "./Authorized"
+import { AllConcerts } from "../components/concerts/AllConcerts"
 
 export const ApplicationViews = ({
 	token,
@@ -29,7 +30,7 @@ export const ApplicationViews = ({
 					element={
 						<Authorized token={token} setToken={setToken} userId={userId} />
 					}>
-					{/* <Route index element={<AllConcerts/>}/> */}
+					<Route index element={<AllConcerts />} />
 				</Route>
 			</Routes>
 		</>
