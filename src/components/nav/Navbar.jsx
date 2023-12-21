@@ -75,7 +75,7 @@ export const NavBar = ({ token, setToken }) => {
 				<div className="navbar-start">
 					{token ? (
 						<Link to="/profile" className="navbar-item">
-							profile
+							Profile
 						</Link>
 					) : (
 						""
