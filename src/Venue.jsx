@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { ApplicationViews } from "./views/ApplicationViews"
-import { NavBar } from "./components/nav/Navbar"
+import { BrowserRouter } from "react-router-dom"
 
 export const Venue = () => {
 	const [token, setTokenState] = useState(localStorage.getItem("auth_token"))
@@ -16,14 +16,13 @@ export const Venue = () => {
 	}
 
 	return (
-		<>
-			<NavBar token={token} setToken={setToken} />
+		<BrowserRouter>
 			<ApplicationViews
 				token={token}
 				setToken={setToken}
 				userId={userId}
 				setCurrentUserId={setCurrentUserId}
 			/>
-		</>
+		</BrowserRouter>
 	)
 }

@@ -24,7 +24,13 @@ export const ApplicationViews = ({
 						<Register setToken={setToken} setCurrentUserId={setCurrentUserId} />
 					}
 				/>
-				<Route element={<Authorized token={token} userId={userId} />}></Route>
+				<Route
+					path="/"
+					element={
+						<Authorized token={token} setToken={setToken} userId={userId} />
+					}>
+					{/* <Route index element={<AllConcerts/>}/> */}
+				</Route>
 			</Routes>
 		</>
 	)
