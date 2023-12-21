@@ -1,14 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import { Venue } from "./Venue"
+import { Venue } from "./Venue.jsx"
 import "./index.css"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
-		<html>
-			<body>
-				<Venue />
-			</body>
-		</html>
+		<Venue />
 	</React.StrictMode>
 )
