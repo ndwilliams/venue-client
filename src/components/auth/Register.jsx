@@ -26,9 +26,9 @@ export const Register = ({ setToken }) => {
 			}
 
 			registerUser(newUser).then((res) => {
-				if ("valid" in res && res.valid) {
+				if (res && res.token) {
 					setToken(res.token)
-					navigate("/")
+					navigate("/login")
 				}
 			})
 		} else {
@@ -37,72 +37,83 @@ export const Register = ({ setToken }) => {
 	}
 
 	return (
-		<section className="text-center justify-center">
-			<h1 className="text-5xl m-4 p-4">Venue</h1>
+		<main>
+			{/* <dialog className="dialog dialog--auth" ref={passwordDialog}>
+				<div>Passwords do not match up</div>
+				<button
+					className="close"
+					onClick={() => passwordDialog.current.close()}>
+					Close
+				</button>
+			</dialog> */}
 
-			<form
-				className="mx-auto w-2/3 text-center content-center justify-center bg-green-100
+			<section className="text-center justify-center">
+				<h1 className="text-5xl m-4 p-4">Venue</h1>
+
+				<form
+					className="mx-auto w-2/3 text-center content-center justify-center bg-green-100
 				bg-opacity-70 py-3 rounded-xl border-black border-4 shadow-lg"
-				onSubmit={handleRegister}>
-				<h2 className="text-4xl my-3">Create an account</h2>
-				<label className="">First Name</label>
-				<fieldset className="m-1">
-					<input className="input rounded-md" type="text" ref={firstName} />
-				</fieldset>
-
-				<label className="label">Last Name</label>
-				<fieldset className="m-1">
-					<input className="input rounded-md" type="text" ref={lastName} />
-				</fieldset>
-
-				<label className="label">Username</label>
-				<fieldset className="m-1">
-					<input className="input rounded-md" type="text" ref={username} />
-				</fieldset>
-
-				<label className="label">Email</label>
-				<fieldset className="m-1">
-					<input className="input rounded-md" type="email" ref={email} />
-				</fieldset>
-
-				<label className="label">Password</label>
-				<div className="field-body">
+					onSubmit={handleRegister}>
+					<h2 className="text-4xl my-3">Create an account</h2>
+					<label className="">First Name</label>
 					<fieldset className="m-1">
-						<p className="control is-expanded p-2">
-							<input
-								className="input rounded-md"
-								type="password"
-								ref={password}
-							/>
-						</p>
+						<input className="input rounded-md" type="text" ref={firstName} />
 					</fieldset>
-					<label className="label">Verify Password</label>
-					<fieldset>
-						<p className="control is-expanded p-2">
-							<input
-								className="input rounded-md"
-								type="password"
-								ref={verifyPassword}
-							/>
-						</p>
-					</fieldset>
-				</div>
 
-				<div className="control">
-					<button
-						className="outline-1 px-1 py-0.5 my-1 bg-green-600 border-black border-2 rounded-lg transition-color hover:bg-green-400 duration-200 delay-50"
-						type="submit">
-						Submit
-					</button>
-				</div>
-				<div className="control">
-					<Link
-						to="/login"
-						className="outline-1 px-1 py-0.5 my-1 border-black border-2 rounded-lg bg-green-600 transition-color hover:bg-green-400 duration-200 delay-50">
-						Cancel
-					</Link>
-				</div>
-			</form>
-		</section>
+					<label className="label">Last Name</label>
+					<fieldset className="m-1">
+						<input className="input rounded-md" type="text" ref={lastName} />
+					</fieldset>
+
+					<label className="label">Username</label>
+					<fieldset className="m-1">
+						<input className="input rounded-md" type="text" ref={username} />
+					</fieldset>
+
+					<label className="label">Email</label>
+					<fieldset className="m-1">
+						<input className="input rounded-md" type="email" ref={email} />
+					</fieldset>
+
+					<label className="label">Password</label>
+					<div className="field-body">
+						<fieldset className="m-1">
+							<p className="control is-expanded p-2">
+								<input
+									className="input rounded-md"
+									type="password"
+									ref={password}
+								/>
+							</p>
+						</fieldset>
+						<label className="label">Verify Password</label>
+						<fieldset>
+							<p className="control is-expanded p-2">
+								<input
+									className="input rounded-md"
+									type="password"
+									ref={verifyPassword}
+								/>
+							</p>
+						</fieldset>
+					</div>
+
+					<div className="control">
+						<button
+							className="outline-1 px-1 py-0.5 my-1 bg-green-600 border-black border-2 rounded-lg transition-color hover:bg-green-400 duration-200 delay-50"
+							type="submit">
+							Submit
+						</button>
+					</div>
+					<div className="control">
+						<Link
+							to="/login"
+							className="outline-1 px-1 py-0.5 my-1 border-black border-2 rounded-lg bg-green-600 transition-color hover:bg-green-400 duration-200 delay-50">
+							Cancel
+						</Link>
+					</div>
+				</form>
+			</section>
+		</main>
 	)
 }
