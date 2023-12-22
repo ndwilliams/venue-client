@@ -35,11 +35,19 @@ export const AllVenues = () => {
 							}}>
 							<div className="venue-name">{venue.name}</div>
 							<div className="venue-image-container relative">
-								<img src={venue.venue_outside_image_url} alt={venue.name} />
+								<img
+									className="object-fill"
+									src={venue.venue_outside_image_url}
+									alt={venue.name}
+								/>
 								<div
 									className="hover-image absolute top-0 left-0 opacity-0 
                                 hover:opacity-100 transition-opacity duration-[2000ms]">
-									<img src={venue.venue_inside_image_url} alt={venue.name} />
+									<img
+										className="object-cover"
+										src={venue.venue_inside_image_url}
+										alt={venue.name}
+									/>
 								</div>
 							</div>
 						</section>
