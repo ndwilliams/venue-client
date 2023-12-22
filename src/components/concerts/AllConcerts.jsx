@@ -44,7 +44,10 @@ export const AllConcerts = () => {
 							key={concert.id}
 							className="flex justify-between p-5 mx-8 my-5 border-4 scale-100
                             bg-green-100 bg-opacity-90 border-green-500 rounded-xl
-                            hover:scale-110 transition-transform duration-300 ">
+                            hover:scale-110 transition-transform duration-300"
+							onClick={() => {
+								navigate(`/${concert.id}`)
+							}}>
 							<div className="pt-1.5">{concert.band.name}</div>
 							<div className="pt-2">{concert.venue.name}</div>
 							<div className="pt-2">{formatDateTime(concert.show_starts)}</div>
