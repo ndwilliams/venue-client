@@ -30,7 +30,7 @@ export const ConcertDetails = () => {
 						</div>
 					)
 				})}
-				<div className="venue-name p-1">At: {chosenConcert.venue.name}</div>
+				<div className="venue-name p-1">At: {chosenConcert.venue?.name}</div>
 				<div className="concert-date p-1">
 					{formatDate(chosenConcert.show_starts)}
 				</div>

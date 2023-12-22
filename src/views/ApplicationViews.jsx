@@ -4,6 +4,7 @@ import { Register } from "../components/auth/Register"
 import { Authorized } from "./Authorized"
 import { AllConcerts } from "../components/concerts/AllConcerts"
 import { ConcertDetails } from "../components/concerts/ConcertDetails"
+import { AllVenues } from "../components/venues/AllVenues"
 
 export const ApplicationViews = ({
 	token,
@@ -33,6 +34,7 @@ export const ApplicationViews = ({
 					}>
 					<Route index element={<AllConcerts />} />
 					<Route path="/:concertId" element={<ConcertDetails />} />
+					<Route path="/venues" element={<AllVenues />} />
 				</Route>
 			</Routes>
 		</>
