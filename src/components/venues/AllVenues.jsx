@@ -31,11 +31,16 @@ export const AllVenues = () => {
                     bg-green-100 bg-opacity-90 border-green-500 rounded-xl
                     hover:scale-110 transition-transform duration-300"
 							onClick={() => {
-								navigate(`/${venue.id}`)
+								navigate(`/venues/${venue.id}`)
 							}}>
 							<div className="venue-name">{venue.name}</div>
-							<div>
-								<img src={venue.venue_outside_image_url} />
+							<div className="venue-image-container relative">
+								<img src={venue.venue_outside_image_url} alt={venue.name} />
+								<div
+									className="hover-image absolute top-0 left-0 opacity-0 
+                                hover:opacity-100 transition-opacity duration-[2000ms]">
+									<img src={venue.venue_inside_image_url} alt={venue.name} />
+								</div>
 							</div>
 						</section>
 					)
