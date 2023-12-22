@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllConcerts } from "../../managers/ConcertManager"
 import { useNavigate } from "react-router-dom"
+import { formatFullDateTime } from "../../utils/FormatDateTime"
 
 export const AllConcerts = () => {
 	const [allConcerts, setAllConcerts] = useState([])
@@ -13,22 +14,6 @@ export const AllConcerts = () => {
 	useEffect(() => {
 		fetchAndSetAllConcerts()
 	}, [])
-
-	const formatDateTime = (dateTimeString) => {
-		const options = {
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-			hour: "numeric",
-			minute: "numeric",
-			hour12: true,
-		}
-		const formattedDate = new Date(dateTimeString).toLocaleDateString(
-			"en-US",
-			options
-		)
-		return formattedDate
-	}
 
 	return (
 		<div className="py-3">
@@ -50,7 +35,9 @@ export const AllConcerts = () => {
 							}}>
 							<div className="pt-1.5">{concert.band.name}</div>
 							<div className="pt-2">{concert.venue.name}</div>
-							<div className="pt-2">{formatDateTime(concert.show_starts)}</div>
+							<div className="pt-2">
+								{formatFullDateTime(concert.show_starts)}
+							</div>
 							<div className=""></div>
 						</section>
 					)
