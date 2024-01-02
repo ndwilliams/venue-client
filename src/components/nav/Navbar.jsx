@@ -70,6 +70,15 @@ export const NavBar = ({ token, setToken }) => {
 						""
 					)}
 				</div>
+				<div className="navbar-start">
+					{token ? (
+						<Link to="/favoriteconcerts" className="navbar-item">
+							Favorites
+						</Link>
+					) : (
+						""
+					)}
+				</div>
 
 				<div className="navbar-end">
 					<div className="navbar-item">
