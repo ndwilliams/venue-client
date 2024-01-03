@@ -8,6 +8,7 @@ import { AllVenues } from "../components/venues/AllVenues"
 import { VenueDetails } from "../components/venues/VenueDetails"
 import { ViewProfile } from "../components/profile/ViewProfile"
 import { FavoriteConcerts } from "../components/favorites/FavoriteConcerts"
+import { AddConcertForm } from "../components/concerts/AddConcertForm"
 
 export const ApplicationViews = ({
 	token,
@@ -59,6 +60,7 @@ export const ApplicationViews = ({
 						path="/favoriteconcerts"
 						element={<FavoriteConcerts userId={userId} token={token} />}
 					/>
+					<Route path="/addConcert" element={<AddConcertForm />} />
 				</Route>
 			</Routes>
 		</>
