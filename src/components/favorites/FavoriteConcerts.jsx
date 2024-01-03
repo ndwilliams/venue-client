@@ -4,20 +4,40 @@ import { formatFullDateTime } from "../../utils/FormatDateTime"
 import { getAllFavorites } from "../../managers/FavoritesManager"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import { FilterConcertsByVenue } from "../concerts/FilterConcertsByVenue"
+import { getAllVenues } from "../../managers/VenueManager"
 
 export const FavoriteConcerts = () => {
 	const [allFavorites, setAllFavorites] = useState([])
 	const [filteredFavorites, setFilteredFavorites] = useState([])
 	const [selectedDate, setSelectedDate] = useState(null)
+	const [allVenues, setAllVenues] = useState([])
+	const [venueSelection, setVenueSelection] = useState([])
 	const navigate = useNavigate()
 
 	const fetchAndSetAllFavorites = () => {
 		getAllFavorites().then((concertsArray) => setAllFavorites(concertsArray))
 	}
 
+	const fetchAndSetAllVenues = () => {
+		getAllVenues().then((venuesArray) => setAllVenues(venuesArray))
+	}
+
 	useEffect(() => {
 		fetchAndSetAllFavorites()
+		fetchAndSetAllVenues()
 	}, [])
+
+	useEffect(() => {
+		if (venueSelection > 0) {
+			const favoritesAtVenue = allFavorites.filter(
+				(favorite) => favorite.concert.venue.id === parseInt(venueSelection)
+			)
+			setFilteredFavorites(favoritesAtVenue)
+		} else {
+			setFilteredFavorites(allFavorites)
+		}
+	}, [allFavorites, venueSelection])
 
 	useEffect(() => {
 		if (selectedDate) {
@@ -47,6 +67,10 @@ export const FavoriteConcerts = () => {
 				/>
 				<button onClick={() => setSelectedDate(null)}>Reset Filters</button>
 			</div>
+			<FilterConcertsByVenue
+				setVenueSelection={setVenueSelection}
+				allVenues={allVenues}
+			/>
 			<div className="py-3">
 				<h2
 					className="bg-zinc-400 bg-opacity-80 m-auto max-w-min

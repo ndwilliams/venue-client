@@ -4,20 +4,40 @@ import { useNavigate } from "react-router-dom"
 import { formatFullDateTime } from "../../utils/FormatDateTime"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import { getAllVenues } from "../../managers/VenueManager"
+import { FilterConcertsByVenue } from "./FilterConcertsByVenue"
 
 export const AllConcerts = () => {
 	const [allConcerts, setAllConcerts] = useState([])
 	const [filteredConcerts, setFilteredConcerts] = useState([])
 	const [selectedDate, setSelectedDate] = useState(null)
+	const [venueSelection, setVenueSelection] = useState([])
+	const [allVenues, setAllVenues] = useState([])
 	const navigate = useNavigate()
 
 	const fetchAndSetAllConcerts = () => {
 		getAllConcerts().then((concertArray) => setAllConcerts(concertArray))
 	}
 
+	const fetchAndSetAllVenues = () => {
+		getAllVenues().then((venuesArray) => setAllVenues(venuesArray))
+	}
+
 	useEffect(() => {
 		fetchAndSetAllConcerts()
+		fetchAndSetAllVenues()
 	}, [])
+
+	useEffect(() => {
+		if (venueSelection > 0) {
+			const concertsAtVenue = allConcerts.filter(
+				(concert) => concert.venue.id === parseInt(venueSelection)
+			)
+			setFilteredConcerts(concertsAtVenue)
+		} else {
+			setFilteredConcerts(allConcerts)
+		}
+	}, [allConcerts, venueSelection])
 
 	useEffect(() => {
 		if (selectedDate) {
@@ -50,6 +70,10 @@ export const AllConcerts = () => {
 				/>
 				<button onClick={() => setSelectedDate(null)}>Reset Filters</button>
 			</div>
+			<FilterConcertsByVenue
+				setVenueSelection={setVenueSelection}
+				allVenues={allVenues}
+			/>
 			<article className="">
 				{filteredConcerts.map((concert) => {
 					return (
