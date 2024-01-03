@@ -6,27 +6,31 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { renderTimeViewClock } from "@mui/x-date-pickers/timeViewRenderers"
+import { useNavigate } from "react-router-dom"
 
 export const AddConcertForm = () => {
 	const [bands, setBands] = useState([])
 	const [venues, setVenues] = useState([])
 	const [doorsOpen, setDoorsOpen] = useState(null)
-	const [concertStartTime, setConcertStartTime] = useState(null)
+	const [showStarts, setShowStarts] = useState(null)
+	const [openers, changeOpeners] = useState([
+		{ id: 1, name: "The Rolling Stones", genre: "Rock & Roll" },
+		{ id: 2, name: "Jay-Z", genre: "Rap/Hip-Hop" },
+	])
+	const [chosenOpeners, updateChosenOpeners] = useState(new Set())
 	const [newConcert, setNewConcert] = useState({
 		band: 0,
 		venue: 0,
-		doors_open: "",
-		show_starts: "",
+		doors_open: "time",
+		show_starts: "time",
 		active: true,
 	})
-
-	// console.log(doorsOpen.$d)
-	// const time = doorsOpen.$d.toISOString()
-	// console.log(time)
+	const navigate = useNavigate()
 
 	const fetchAndSetBands = () => {
 		getAllBands().then((bandsArray) => {
 			setBands(bandsArray)
+			changeOpeners(bandsArray)
 		})
 	}
 
@@ -41,16 +45,45 @@ export const AddConcertForm = () => {
 		fetchAndSetAllVenues()
 	}, [])
 
-	const handleInputChange = (e) => {
-		const concertCopy = { ...newConcert }
-		concertCopy[e.target.name] = e.target.value
-		setNewConcert(concertCopy)
+	const addConcert = async () => {
+		const response = await fetch(`http://localhost:8000/concerts`, {
+			method: "POST",
+			headers: {
+				Authorization: `Token ${localStorage.getItem("auth_token")}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				...newConcert,
+				openers: Array.from(chosenOpeners),
+				doors_open: doorsOpen.$d.toISOString(),
+				show_starts: showStarts.$d.toISOString(),
+			}),
+		})
+		return response
+	}
+
+	const handleSubmit = async (event) => {
+		event.preventDefault()
+		if (Object.values(newConcert).every(Boolean) && doorsOpen && showStarts) {
+			await addConcert()
+			navigate(`/`)
+		} else {
+			window.alert("Please Fill Out All The Necessary Fields")
+		}
 	}
 
 	const handleSelectInputChange = (e) => {
 		const concertCopy = { ...newConcert }
 		concertCopy[e.target.name] = parseInt(e.target.value)
 		setNewConcert(concertCopy)
+	}
+
+	const handleOpenerChosen = (opener) => {
+		const openersCopy = new Set(chosenOpeners)
+		openersCopy.has(opener.id)
+			? openersCopy.delete(opener.id)
+			: openersCopy.add(opener.id)
+		updateChosenOpeners(openersCopy)
 	}
 
 	return (
@@ -78,8 +111,8 @@ export const AddConcertForm = () => {
 					<DemoContainer components={["DateTimePicker"]}>
 						<DateTimePicker
 							label="Concert Starts"
-							selected={concertStartTime}
-							onChange={setConcertStartTime}
+							selected={showStarts}
+							onChange={setShowStarts}
 							views={["year", "month", "day", "hours", "minutes"]}
 							viewRenderers={{
 								hours: renderTimeViewClock,
@@ -90,10 +123,10 @@ export const AddConcertForm = () => {
 					</DemoContainer>
 				</LocalizationProvider>
 			</div>
-			<form className="add-concert-form">
+			<form name="add-concert" className="add-concert-form">
 				<div className="headling-band">Headliner</div>
 				<select
-					name="Headliner"
+					name="band"
 					value={bands.id}
 					onChange={handleSelectInputChange}
 					className="add-concert-input">
@@ -108,7 +141,7 @@ export const AddConcertForm = () => {
 				</select>
 				<div className="venue">Venue</div>
 				<select
-					name="Venue"
+					name="venue"
 					value={venues.id}
 					onChange={handleSelectInputChange}
 					className="add-concert-input">
@@ -121,6 +154,28 @@ export const AddConcertForm = () => {
 						)
 					})}
 				</select>
+				<fieldset>
+					<label>
+						{" "}
+						<strong>Openers</strong>
+					</label>
+					<br />
+					{openers.map((band) => (
+						<div key={`band-${band.id}`}>
+							<input
+								type="checkbox"
+								checked={chosenOpeners.has(band.id)}
+								onChange={() => handleOpenerChosen(band)}
+							/>
+							{band.name}
+						</div>
+					))}
+				</fieldset>
+				<fieldset>
+					<button type="submit" onClick={handleSubmit}>
+						Submit Concert
+					</button>
+				</fieldset>
 			</form>
 		</div>
 	)
