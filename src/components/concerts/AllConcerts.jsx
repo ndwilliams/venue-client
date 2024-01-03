@@ -74,6 +74,13 @@ export const AllConcerts = () => {
 				setVenueSelection={setVenueSelection}
 				allVenues={allVenues}
 			/>
+			<div
+				className="add-concert-button"
+				onClick={() => {
+					navigate(`/addConcert`)
+				}}>
+				Add Concert
+			</div>
 			<article className="">
 				{filteredConcerts.map((concert) => {
 					return (
