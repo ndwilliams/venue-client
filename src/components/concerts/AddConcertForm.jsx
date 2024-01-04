@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getAllBands } from "../../managers/BandManager"
 import { getAllVenues } from "../../managers/VenueManager"
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo"
@@ -25,6 +25,11 @@ export const AddConcertForm = () => {
 		show_starts: "time",
 		active: true,
 	})
+	const [newBand, setNewBand] = useState({
+		name: "",
+		genre: "",
+	})
+	const addBand = useRef()
 	const navigate = useNavigate()
 
 	const fetchAndSetBands = () => {
@@ -86,8 +91,73 @@ export const AddConcertForm = () => {
 		updateChosenOpeners(openersCopy)
 	}
 
+	const handleBandInputChange = (event) => {
+		const bandCopy = { ...newBand }
+		bandCopy[event.target.name] = event.target.value
+		setNewBand(bandCopy)
+	}
+
+	const postNewBand = async (newBand) => {
+		const response = await fetch(`http://localhost:8000/bands`, {
+			method: "POST",
+			headers: {
+				Authorization: `Token ${localStorage.getItem("auth_token")}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newBand),
+		})
+		return response
+	}
+
+	const handleSubmitNewBand = async (event) => {
+		event.preventDefault()
+		await postNewBand(newBand)
+		addBand.current.close()
+		fetchAndSetBands()
+		setNewBand({ name: "", band: "" })
+	}
+
 	return (
 		<div className="add-concert-container">
+			<dialog className="manage-add-bands" ref={addBand}>
+				<div className="add-band-modal">
+					<fieldset>
+						<input
+							type="text"
+							name="name"
+							value={newBand.name}
+							placeholder="Band Name"
+							className="input-text"
+							onChange={handleBandInputChange}
+							required
+						/>
+					</fieldset>
+					<fieldset>
+						<input
+							type="text"
+							value={newBand.genre}
+							name="genre"
+							placeholder="Genre"
+							className="input-text"
+							onChange={handleBandInputChange}
+							required
+						/>
+					</fieldset>
+				</div>
+				<div>
+					<button className="save-button" onClick={handleSubmitNewBand}>
+						Add Band
+					</button>
+					<button
+						className="exit-button"
+						onClick={() => {
+							addBand.current.close()
+							setNewBand({ name: "", genre: "" })
+						}}>
+						Cancel
+					</button>
+				</div>
+			</dialog>
 			<h2 className="add-concert-header">Add Concert</h2>
 			<div className="doors-open-picker bg-slate-500">
 				<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -139,6 +209,16 @@ export const AddConcertForm = () => {
 						)
 					})}
 				</select>
+				<div>
+					<button
+						type="button"
+						className="add-new-band"
+						onClick={() => {
+							addBand.current.showModal()
+						}}>
+						{`Don't See The Band You're Looking For? Add it Here!`}
+					</button>
+				</div>
 				<div className="venue">Venue</div>
 				<select
 					name="venue"
