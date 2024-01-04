@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getVenueById } from "../../managers/VenueManager"
 
 export const VenueDetails = () => {
 	const [chosenVenue, setChosenVenue] = useState({})
 	const { venueId } = useParams()
+	const navigate = useNavigate()
 
 	const fetchAndSetVenue = () => {
 		getVenueById(venueId).then((venueObj) => setChosenVenue(venueObj))
@@ -28,6 +29,15 @@ export const VenueDetails = () => {
 				<div className="about-section">
 					<span className="about-section-indicator">About This Venue: </span>
 					{chosenVenue.about_section}
+				</div>
+				<div className="edit-venue-button-container">
+					<button
+						className="edit-venue-button"
+						onClick={() => {
+							navigate(`/venues/${venueId}/edit`)
+						}}>
+						Edit Venue
+					</button>
 				</div>
 			</section>
 		</div>
