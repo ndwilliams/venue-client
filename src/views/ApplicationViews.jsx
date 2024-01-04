@@ -10,6 +10,7 @@ import { ViewProfile } from "../components/profile/ViewProfile"
 import { FavoriteConcerts } from "../components/favorites/FavoriteConcerts"
 import { AddConcertForm } from "../components/concerts/AddConcertForm"
 import { EditVenue } from "../components/venues/EditVenue"
+import { EditConcert } from "../components/concerts/EditConcert"
 
 export const ApplicationViews = ({
 	token,
@@ -45,6 +46,7 @@ export const ApplicationViews = ({
 						path="/:concertId"
 						element={<ConcertDetails userId={userId} token={token} />}
 					/>
+					<Route path="/:concertId/edit" element={<EditConcert />} />
 					<Route
 						path="/venues/"
 						element={<AllVenues userId={userId} token={token} />}

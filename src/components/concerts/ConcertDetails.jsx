@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getConcertById } from "../../managers/ConcertManager"
 import { formatDate, formatHour } from "../../utils/FormatDateTime"
 import { getAllFavorites } from "../../managers/FavoritesManager"
@@ -10,6 +10,7 @@ export const ConcertDetails = ({ userId }) => {
 	const [chosenConcert, setChosenConcert] = useState({})
 	const [favorites, setFavorites] = useState([])
 	const { concertId } = useParams()
+	const navigate = useNavigate()
 
 	const fetchAndSetConcert = () => {
 		getConcertById(concertId).then((concertObj) => setChosenConcert(concertObj))
@@ -102,6 +103,11 @@ export const ConcertDetails = ({ userId }) => {
 						</button>
 					</div>
 				)}
+			</div>
+			<div>
+				<button type="button" onClick={() => navigate(`/${concertId}/edit`)}>
+					Edit Concert
+				</button>
 			</div>
 		</section>
 	)
