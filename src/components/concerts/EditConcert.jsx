@@ -1,36 +1,45 @@
 import { useEffect, useRef, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { getAllBands } from "../../managers/BandManager"
 import { getAllVenues } from "../../managers/VenueManager"
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { getConcertById } from "../../managers/ConcertManager"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { renderTimeViewClock } from "@mui/x-date-pickers/timeViewRenderers"
-import { useNavigate } from "react-router-dom"
+import dayjs from "dayjs"
 
-export const AddConcertForm = () => {
+export const EditConcert = () => {
+	const { concertId } = useParams()
+	const navigate = useNavigate()
+
+	const [editedConcert, setEditedConcert] = useState({})
 	const [bands, setBands] = useState([])
 	const [venues, setVenues] = useState([])
-	const [doorsOpen, setDoorsOpen] = useState(null)
-	const [showStarts, setShowStarts] = useState(null)
+	const [chosenOpeners, updateChosenOpeners] = useState(new Set())
 	const [openers, changeOpeners] = useState([
 		{ id: 1, name: "The Rolling Stones", genre: "Rock & Roll" },
 		{ id: 2, name: "Jay-Z", genre: "Rap/Hip-Hop" },
 	])
-	const [chosenOpeners, updateChosenOpeners] = useState(new Set())
-	const [newConcert, setNewConcert] = useState({
-		band: 0,
-		venue: 0,
-		doors_open: "time",
-		show_starts: "time",
-		active: true,
-	})
 	const [newBand, setNewBand] = useState({
 		name: "",
 		genre: "",
 	})
 	const addBand = useRef()
-	const navigate = useNavigate()
+
+	const fetchAndSetConcert = () => {
+		getConcertById(concertId).then((concertObj) =>
+			setEditedConcert({
+				venue: concertObj.venue.id,
+				band: concertObj.band.id,
+				active: concertObj.active,
+				opening_bands: concertObj.opening_bands,
+				show_starts: concertObj.show_starts,
+				doors_open: concertObj.doors_open,
+			})
+		)
+	}
 
 	const fetchAndSetBands = () => {
 		getAllBands().then((bandsArray) => {
@@ -46,41 +55,50 @@ export const AddConcertForm = () => {
 	}
 
 	useEffect(() => {
-		fetchAndSetBands()
+		fetchAndSetConcert()
 		fetchAndSetAllVenues()
+		fetchAndSetBands()
 	}, [])
 
-	const addConcert = async () => {
-		const response = await fetch(`http://localhost:8000/concerts`, {
-			method: "POST",
-			headers: {
-				Authorization: `Token ${localStorage.getItem("auth_token")}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				...newConcert,
-				opening_bands: Array.from(chosenOpeners),
-				doors_open: doorsOpen.$d.toISOString(),
-				show_starts: showStarts.$d.toISOString(),
-			}),
-		})
+	useEffect(() => {
+		const openersCopy = new Set(
+			editedConcert.opening_bands?.map((band) => band.id)
+		)
+		updateChosenOpeners(openersCopy)
+	}, [editedConcert])
+
+	const editConcert = async () => {
+		const response = await fetch(
+			`http://localhost:8000/concerts/${concertId}`,
+			{
+				method: "PUT",
+				headers: {
+					Authorization: `Token ${localStorage.getItem("auth_token")}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					...editedConcert,
+					opening_bands: Array.from(chosenOpeners),
+				}),
+			}
+		)
 		return response
 	}
 
 	const handleSubmit = async (event) => {
 		event.preventDefault()
-		if (Object.values(newConcert).every(Boolean) && doorsOpen && showStarts) {
-			await addConcert()
-			navigate(`/`)
+		if (Object.values(editedConcert).every(Boolean)) {
+			await editConcert()
+			navigate(`/${concertId}`)
 		} else {
 			window.alert("Please Fill Out All The Necessary Fields")
 		}
 	}
 
 	const handleSelectInputChange = (e) => {
-		const concertCopy = { ...newConcert }
+		const concertCopy = { ...editedConcert }
 		concertCopy[e.target.name] = parseInt(e.target.value)
-		setNewConcert(concertCopy)
+		setEditedConcert(concertCopy)
 	}
 
 	const handleOpenerChosen = (opener) => {
@@ -164,8 +182,11 @@ export const AddConcertForm = () => {
 					<DemoContainer components={["DateTimePicker"]}>
 						<DateTimePicker
 							label="Doors Open"
-							selected={doorsOpen}
-							onChange={setDoorsOpen}
+							value={dayjs(editedConcert.doors_open)}
+							onChange={(time) => {
+								const newTime = time.$d.toISOString()
+								setEditedConcert({ ...editedConcert, ["doors_open"]: newTime })
+							}}
 							views={["year", "month", "day", "hours", "minutes"]}
 							viewRenderers={{
 								hours: renderTimeViewClock,
@@ -181,8 +202,11 @@ export const AddConcertForm = () => {
 					<DemoContainer components={["DateTimePicker"]}>
 						<DateTimePicker
 							label="Concert Starts"
-							selected={showStarts}
-							onChange={setShowStarts}
+							value={dayjs(editedConcert.show_starts)}
+							onChange={(time) => {
+								const newTime = time.$d.toISOString()
+								setEditedConcert({ ...editedConcert, ["show_starts"]: newTime })
+							}}
 							views={["year", "month", "day", "hours", "minutes"]}
 							viewRenderers={{
 								hours: renderTimeViewClock,
@@ -197,7 +221,7 @@ export const AddConcertForm = () => {
 				<div className="headling-band">Headliner</div>
 				<select
 					name="band"
-					value={bands.id}
+					value={editedConcert.band}
 					onChange={handleSelectInputChange}
 					className="add-concert-input">
 					<option value={0}>Please select a headliner</option>
@@ -222,7 +246,7 @@ export const AddConcertForm = () => {
 				<div className="venue">Venue</div>
 				<select
 					name="venue"
-					value={venues.id}
+					value={editedConcert.venue}
 					onChange={handleSelectInputChange}
 					className="add-concert-input">
 					<option value={0}>Please select a venue</option>
