@@ -59,7 +59,7 @@ export const AddConcertForm = () => {
 			},
 			body: JSON.stringify({
 				...newConcert,
-				openers: Array.from(chosenOpeners),
+				opening_bands: Array.from(chosenOpeners),
 				doors_open: doorsOpen.$d.toISOString(),
 				show_starts: showStarts.$d.toISOString(),
 			}),

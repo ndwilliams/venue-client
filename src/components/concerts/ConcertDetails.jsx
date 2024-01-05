@@ -35,8 +35,8 @@ export const ConcertDetails = ({ userId }) => {
 			},
 			body: JSON.stringify(favoriteObject),
 		})
-		fetchAndSetConcert()
 		fetchAndSetFavorites()
+		fetchAndSetConcert()
 	}
 
 	const handleUnfavorite = async () => {
@@ -52,8 +52,8 @@ export const ConcertDetails = ({ userId }) => {
 				"Content-Type": "application/json",
 			},
 		})
-		fetchAndSetConcert()
 		fetchAndSetFavorites()
+		fetchAndSetConcert()
 	}
 
 	useEffect(() => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { formatFullDateTime } from "../../utils/FormatDateTime"
-import { getAllFavorites } from "../../managers/FavoritesManager"
+import { getCurrentUserFavorites } from "../../managers/FavoritesManager"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { FilterConcertsByVenue } from "../concerts/FilterConcertsByVenue"
@@ -15,8 +15,10 @@ export const FavoriteConcerts = () => {
 	const [venueSelection, setVenueSelection] = useState([])
 	const navigate = useNavigate()
 
-	const fetchAndSetAllFavorites = () => {
-		getAllFavorites().then((concertsArray) => setAllFavorites(concertsArray))
+	const fetchAndSetCurrentUserFavorites = () => {
+		getCurrentUserFavorites().then((concertsArray) =>
+			setAllFavorites(concertsArray)
+		)
 	}
 
 	const fetchAndSetAllVenues = () => {
@@ -24,7 +26,7 @@ export const FavoriteConcerts = () => {
 	}
 
 	useEffect(() => {
-		fetchAndSetAllFavorites()
+		fetchAndSetCurrentUserFavorites()
 		fetchAndSetAllVenues()
 	}, [])
 
