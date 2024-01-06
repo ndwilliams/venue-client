@@ -11,6 +11,7 @@ import { FavoriteConcerts } from "../components/favorites/FavoriteConcerts"
 import { AddConcertForm } from "../components/concerts/AddConcertForm"
 import { EditVenue } from "../components/venues/EditVenue"
 import { EditConcert } from "../components/concerts/EditConcert"
+import { AddVenue } from "../components/venues/AddVenue"
 
 export const ApplicationViews = ({
 	token,
@@ -42,6 +43,7 @@ export const ApplicationViews = ({
 						index
 						element={<AllConcerts userId={userId} token={token} />}
 					/>
+					<Route path="/addConcert" element={<AddConcertForm />} />
 					<Route
 						path="/:concertId"
 						element={<ConcertDetails userId={userId} token={token} />}
@@ -51,6 +53,7 @@ export const ApplicationViews = ({
 						path="/venues/"
 						element={<AllVenues userId={userId} token={token} />}
 					/>
+					<Route path="/addVenue" element={<AddVenue />} />
 					<Route
 						path="/venues/:venueId"
 						element={<VenueDetails userId={userId} token={token} />}
@@ -64,7 +67,6 @@ export const ApplicationViews = ({
 						path="/favoriteconcerts"
 						element={<FavoriteConcerts userId={userId} token={token} />}
 					/>
-					<Route path="/addConcert" element={<AddConcertForm />} />
 				</Route>
 			</Routes>
 		</>
