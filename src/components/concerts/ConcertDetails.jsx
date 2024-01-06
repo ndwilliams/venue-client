@@ -30,7 +30,7 @@ export const ConcertDetails = ({ currentUser }) => {
 		await fetch(`http://localhost:8000/favorites`, {
 			method: "POST",
 			headers: {
-				Authorization: `Token ${localStorage.getItem("auth_token")}`,
+				Authorization: `Token ${currentUser.token}`,
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(favoriteObject),
@@ -49,7 +49,7 @@ export const ConcertDetails = ({ currentUser }) => {
 		await fetch(`http://localhost:8000/favorites/${favorite.id}`, {
 			method: "DELETE",
 			headers: {
-				Authorization: `Token ${localStorage.getItem("auth_token")}`,
+				Authorization: `Token ${currentUser.token}`,
 				"Content-Type": "application/json",
 			},
 		})

@@ -27,9 +27,9 @@ export const Register = ({ setToken }) => {
 				is_staff: is_staff_checkbox.current.checked,
 			}
 
-			registerUser(newUser).then((res) => {
-				if (res && res.token) {
-					setToken(res.token)
+			registerUser(newUser).then((data) => {
+				if (data && data.token) {
+					setToken(data.token)
 					navigate("/login")
 				}
 			})
