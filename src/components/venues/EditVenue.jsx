@@ -18,9 +18,7 @@ export const EditVenue = () => {
 		setVenue(venueCopy)
 	}
 
-	const handleSubmit = async (event) => {
-		event.preventDefault()
-
+	const editVenue = async () => {
 		const response = await fetch(
 			`http://localhost:8000/venues/${parseInt(venueId)}`,
 			{
@@ -32,8 +30,23 @@ export const EditVenue = () => {
 				body: JSON.stringify(venue),
 			}
 		)
-		navigate(`/venues/${venueId}`)
 		return response
+	}
+
+	const isNonEmpty = (value) => {
+		return value !== undefined && value !== null && value !== ""
+	}
+
+	const handleSubmit = async (event) => {
+		event.preventDefault()
+		const isEveryValueTruthy = Object.values(venue).every(isNonEmpty)
+		if (isEveryValueTruthy) {
+			alert("Venue Successfully Edited!")
+			await editVenue()
+			navigate(`/venues/${venueId}`)
+		} else {
+			window.alert("Please Fill Out All The Necessary Fields")
+		}
 	}
 
 	return (
@@ -107,6 +120,44 @@ export const EditVenue = () => {
 					onChange={handleInputChange}
 				/>
 			</fieldset>
+			<fieldset>
+				{venue.active ? (
+					<div>
+						<button
+							type="button"
+							className="hide-venue-button"
+							onClick={() => {
+								if (
+									window.confirm("Are you sure you wish to hide this venue?")
+								) {
+									setVenue({ ...venue, active: false })
+									handleSubmit()
+								}
+							}}>
+							Hide Venue
+						</button>
+					</div>
+				) : (
+					<div>
+						<button
+							type="button"
+							className="unhide-venue-button"
+							onClick={() => {
+								if (
+									window.confirm(
+										"Are you sure you wish to activate this venue?"
+									)
+								) {
+									setVenue({ ...venue, active: true })
+									handleSubmit()
+								}
+							}}>
+							Activate Venue
+						</button>
+					</div>
+				)}
+			</fieldset>
+
 			<button type="submit" onClick={handleSubmit}>
 				Update Venue
 			</button>

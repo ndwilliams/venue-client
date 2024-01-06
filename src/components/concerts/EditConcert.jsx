@@ -85,9 +85,15 @@ export const EditConcert = () => {
 		return response
 	}
 
+	const isNonEmpty = (value) => {
+		return value !== undefined && value !== null && value !== ""
+	}
+
 	const handleSubmit = async (event) => {
 		event.preventDefault()
-		if (Object.values(editedConcert).every(Boolean)) {
+		const isEveryValueTruthy = Object.values(editedConcert).every(isNonEmpty)
+		if (isEveryValueTruthy) {
+			alert("Concert Successfully Edited!")
 			await editConcert()
 			navigate(`/${concertId}`)
 		} else {
@@ -176,6 +182,7 @@ export const EditConcert = () => {
 					</button>
 				</div>
 			</dialog>
+			<dialog></dialog>
 			<h2 className="add-concert-header">Add Concert</h2>
 			<div className="doors-open-picker bg-slate-500">
 				<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -279,6 +286,45 @@ export const EditConcert = () => {
 					<button type="submit" onClick={handleSubmit}>
 						Submit Concert
 					</button>
+				</fieldset>
+				<fieldset>
+					{editedConcert.active ? (
+						<div>
+							<button
+								type="button"
+								className="hide-concert-button"
+								onClick={() => {
+									if (
+										window.confirm(
+											"Are you sure you wish to hide this concert?"
+										)
+									) {
+										setEditedConcert({ ...editedConcert, active: false })
+										editConcert()
+									}
+								}}>
+								Hide Concert
+							</button>
+						</div>
+					) : (
+						<div>
+							<button
+								type="button"
+								className="unhide-concert-button"
+								onClick={() => {
+									if (
+										window.confirm(
+											"Are you sure you wish to activate this concert?"
+										)
+									) {
+										setEditedConcert({ ...editedConcert, active: true })
+										editConcert()
+									}
+								}}>
+								Activate Concert
+							</button>
+						</div>
+					)}
 				</fieldset>
 			</form>
 		</div>

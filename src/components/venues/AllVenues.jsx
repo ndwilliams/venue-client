@@ -21,7 +21,13 @@ export const AllVenues = () => {
              rounded-md text-center text-3xl font-sans underline font-extrabold">
 				All Venues
 			</h2>
-
+			<div
+				className="add-venue-button"
+				onClick={() => {
+					navigate(`/addVenue`)
+				}}>
+				Add Venue
+			</div>
 			<article className="">
 				{allVenues.map((venue) => {
 					return (
