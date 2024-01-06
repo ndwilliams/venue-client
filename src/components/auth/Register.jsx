@@ -10,6 +10,7 @@ export const Register = ({ setToken }) => {
 	const username = useRef()
 	const password = useRef()
 	const verifyPassword = useRef()
+	const is_staff_checkbox = useRef()
 	const passwordDialog = useRef()
 	const navigate = useNavigate()
 
@@ -23,6 +24,7 @@ export const Register = ({ setToken }) => {
 				last_name: lastName.current.value,
 				email: email.current.value,
 				password: password.current.value,
+				is_staff: is_staff_checkbox.current.checked,
 			}
 
 			registerUser(newUser).then((res) => {
@@ -95,6 +97,14 @@ export const Register = ({ setToken }) => {
 									ref={verifyPassword}
 								/>
 							</p>
+						</fieldset>
+						<label className="label">Are You Staff?</label>
+						<fieldset className="m-1">
+							<input
+								className="rounded-md"
+								type="checkbox"
+								ref={is_staff_checkbox}
+							/>
 						</fieldset>
 					</div>
 
