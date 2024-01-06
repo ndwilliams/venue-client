@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react"
-import { getProfileByUserId } from "../../managers/ProfileManager"
+import { getCurrentUserProfile } from "../../managers/ProfileManager"
 import { ProfileDetails } from "./ProfileDetails"
 import { EditProfile } from "./EditProfile"
 
-export const ViewProfile = ({ userId, token }) => {
+export const ViewProfile = ({ currentUser }) => {
 	const [Editing, setEditing] = useState(false)
 	const [myProfile, setMyProfile] = useState({})
 
 	const fetchAndSetMyProfile = () => {
-		getProfileByUserId(userId, token).then((profileObj) =>
-			setMyProfile(profileObj)
-		)
+		getCurrentUserProfile().then((profileObj) => setMyProfile(profileObj))
 	}
 
 	useEffect(() => {
@@ -22,15 +20,13 @@ export const ViewProfile = ({ userId, token }) => {
 			{Editing ? (
 				<EditProfile
 					myProfile={myProfile}
-					userId={userId}
-					token={token}
+					currentUser={currentUser}
 					Editing={Editing}
 					setEditing={setEditing}
 				/>
 			) : (
 				<ProfileDetails
-					userId={userId}
-					token={token}
+					currentUser={currentUser}
 					myProfile={myProfile}
 					Editing={Editing}
 					setEditing={setEditing}

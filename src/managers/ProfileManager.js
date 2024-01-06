@@ -1,18 +1,26 @@
-export const getProfileByUserId = (userId, token) => {
-	return fetch(`http://localhost:8000/users/${userId}`, {
-		headers: {
-			Authorization: `Token ${token}`,
-		},
-	}).then((res) => res.json())
+export const getCurrentUserProfile = () => {
+	const currentUser = JSON.parse(localStorage.getItem("current_user"))
+	if (currentUser && currentUser.token && currentUser.user_id) {
+		return fetch(`http://localhost:8000/users/${currentUser.user_id}`, {
+			method: "GET",
+			headers: {
+				Authorization: `Token ${currentUser.token}`,
+				"Content-Type": "application/json",
+			},
+		}).then((res) => res.json())
+	}
 }
 
-export const editUser = (updatedUser, token, userId) => {
-	return fetch(`http://localhost:8000/users/${userId}`, {
-		method: "PUT",
-		headers: {
-			Authorization: `Token ${token}`,
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(updatedUser),
-	})
+export const editUser = (updatedUser) => {
+	const currentUser = JSON.parse(localStorage.getItem("current_user"))
+	if (currentUser && currentUser.token && currentUser.user_id) {
+		return fetch(`http://localhost:8000/users/${currentUser.user_id}`, {
+			method: "PUT",
+			headers: {
+				Authorization: `Token ${currentUser.token}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(updatedUser),
+		}).then((res) => res.json())
+	}
 }
