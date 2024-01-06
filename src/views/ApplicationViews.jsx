@@ -18,6 +18,8 @@ export const ApplicationViews = ({
 	setToken,
 	userId,
 	setCurrentUserId,
+	is_staff,
+	setAdminStatus,
 }) => {
 	return (
 		<>
@@ -25,19 +27,32 @@ export const ApplicationViews = ({
 				<Route
 					path="/login"
 					element={
-						<Login setToken={setToken} setCurrentUserId={setCurrentUserId} />
+						<Login
+							setToken={setToken}
+							setCurrentUserId={setCurrentUserId}
+							setAdminStatus={setAdminStatus}
+						/>
 					}
 				/>
 				<Route
 					path="/register"
 					element={
-						<Register setToken={setToken} setCurrentUserId={setCurrentUserId} />
+						<Register
+							setToken={setToken}
+							setCurrentUserId={setCurrentUserId}
+							setAdminStatus={setAdminStatus}
+						/>
 					}
 				/>
 				<Route
 					path="/"
 					element={
-						<Authorized token={token} setToken={setToken} userId={userId} />
+						<Authorized
+							token={token}
+							setToken={setToken}
+							userId={userId}
+							is_staff={is_staff}
+						/>
 					}>
 					<Route
 						index
