@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getVenueById } from "../../managers/VenueManager"
 
-export const VenueDetails = () => {
+export const VenueDetails = ({ currentUser }) => {
 	const [chosenVenue, setChosenVenue] = useState({})
 	const { venueId } = useParams()
 	const navigate = useNavigate()
@@ -30,15 +30,19 @@ export const VenueDetails = () => {
 					<span className="about-section-indicator">About This Venue: </span>
 					{chosenVenue.about_section}
 				</div>
-				<div className="edit-venue-button-container">
-					<button
-						className="edit-venue-button"
-						onClick={() => {
-							navigate(`/venues/${venueId}/edit`)
-						}}>
-						Edit Venue
-					</button>
-				</div>
+				{currentUser.is_staff === true ? (
+					<div className="edit-venue-button-container">
+						<button
+							className="edit-venue-button"
+							onClick={() => {
+								navigate(`/venues/${venueId}/edit`)
+							}}>
+							Edit Venue
+						</button>
+					</div>
+				) : (
+					""
+				)}
 			</section>
 		</div>
 	)

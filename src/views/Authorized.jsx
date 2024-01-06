@@ -1,11 +1,27 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { NavBar } from "../components/nav/Navbar"
 
-export const Authorized = ({ userId, token, setToken }) => {
-	if (token) {
+export const Authorized = ({
+	userId,
+	token,
+	setToken,
+	is_staff,
+	setCurrentUserId,
+	setAdminStatus,
+	currentUser,
+}) => {
+	if (currentUser) {
 		return (
 			<>
-				<NavBar userId={userId} token={token} setToken={setToken} />
+				<NavBar
+					userId={userId}
+					setCurrentUserId={setCurrentUserId}
+					token={token}
+					setToken={setToken}
+					setAdminStatus={setAdminStatus}
+					is_staff={is_staff}
+					currentUser={currentUser}
+				/>
 				<Outlet />
 			</>
 		)

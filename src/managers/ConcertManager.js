@@ -1,5 +1,12 @@
 export const getAllConcerts = () => {
-	return fetch(`http://localhost:8000/concerts`, {
+	const is_staff = localStorage.getItem("is_staff")
+	let url = ""
+	if (is_staff === "true") {
+		url = `http://localhost:8000/concerts?user=admin`
+	} else {
+		url = `http://localhost:8000/concerts`
+	}
+	return fetch(url, {
 		headers: {
 			Authorization: `Token ${localStorage.getItem("auth_token")}`,
 		},

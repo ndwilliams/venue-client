@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import { getAllVenues } from "../../managers/VenueManager"
 import { FilterConcertsByVenue } from "./FilterConcertsByVenue"
 
-export const AllConcerts = () => {
+export const AllConcerts = ({ currentUser }) => {
 	const [allConcerts, setAllConcerts] = useState([])
 	const [filteredConcerts, setFilteredConcerts] = useState([])
 	const [selectedDate, setSelectedDate] = useState(null)
@@ -74,33 +74,37 @@ export const AllConcerts = () => {
 				setVenueSelection={setVenueSelection}
 				allVenues={allVenues}
 			/>
-			<div
-				className="add-concert-button"
-				onClick={() => {
-					navigate(`/addConcert`)
-				}}>
-				Add Concert
-			</div>
+			{currentUser.is_staff === true ? (
+				<div
+					className="add-concert-button"
+					onClick={() => {
+						navigate(`/addConcert`)
+					}}>
+					Add Concert
+				</div>
+			) : (
+				""
+			)}
+
 			<article className="">
 				{filteredConcerts.map((concert) => {
-					if (concert.active)
-						return (
-							<section
-								key={concert.id}
-								className="flex justify-between p-5 mx-8 my-5 border-4 scale-100
+					return (
+						<section
+							key={concert.id}
+							className="flex justify-between p-5 mx-8 my-5 border-4 scale-100
                             bg-green-100 bg-opacity-90 border-green-500 rounded-xl
                             hover:scale-110 transition-transform duration-300"
-								onClick={() => {
-									navigate(`/${concert.id}`)
-								}}>
-								<div className="pt-1.5">{concert.band.name}</div>
-								<div className="pt-2">{concert.venue.name}</div>
-								<div className="pt-2">
-									{formatFullDateTime(concert.show_starts)}
-								</div>
-								<div className=""></div>
-							</section>
-						)
+							onClick={() => {
+								navigate(`/${concert.id}`)
+							}}>
+							<div className="pt-1.5">{concert.band.name}</div>
+							<div className="pt-2">{concert.venue.name}</div>
+							<div className="pt-2">
+								{formatFullDateTime(concert.show_starts)}
+							</div>
+							<div className=""></div>
+						</section>
+					)
 				})}
 			</article>
 		</div>
