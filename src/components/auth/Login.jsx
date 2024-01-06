@@ -2,7 +2,12 @@ import { useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { loginUser } from "../../managers/AuthManager"
 
-export const Login = ({ setToken, setCurrentUserId, setAdminStatus }) => {
+export const Login = ({
+	setToken,
+	setCurrentUserId,
+	setAdminStatus,
+	setUser,
+}) => {
 	const username = useRef()
 	const password = useRef()
 	const navigate = useNavigate()
@@ -21,6 +26,7 @@ export const Login = ({ setToken, setCurrentUserId, setAdminStatus }) => {
 				setToken(res.token)
 				setCurrentUserId(res.user_id)
 				setAdminStatus(res.is_staff)
+				setUser(res)
 				navigate("/")
 			} else {
 				Dialog.current.showModal()

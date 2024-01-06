@@ -20,6 +20,8 @@ export const ApplicationViews = ({
 	setCurrentUserId,
 	is_staff,
 	setAdminStatus,
+	currentUser,
+	setUser,
 }) => {
 	return (
 		<>
@@ -31,6 +33,7 @@ export const ApplicationViews = ({
 							setToken={setToken}
 							setCurrentUserId={setCurrentUserId}
 							setAdminStatus={setAdminStatus}
+							setUser={setUser}
 						/>
 					}
 				/>
@@ -41,46 +44,93 @@ export const ApplicationViews = ({
 							setToken={setToken}
 							setCurrentUserId={setCurrentUserId}
 							setAdminStatus={setAdminStatus}
+							setUser={setUser}
 						/>
 					}
 				/>
 				<Route
-					path="/"
 					element={
 						<Authorized
 							token={token}
 							setToken={setToken}
 							userId={userId}
+							setCurrentUserId={setCurrentUserId}
+							setAdminStatus={setAdminStatus}
 							is_staff={is_staff}
+							currentUser={currentUser}
 						/>
 					}>
 					<Route
-						index
-						element={<AllConcerts userId={userId} token={token} />}
+						path="/"
+						element={
+							<AllConcerts
+								userId={userId}
+								token={token}
+								is_staff={is_staff}
+								setCurrentUserId={setCurrentUserId}
+								setAdminStatus={setAdminStatus}
+								currentUser={currentUser}
+							/>
+						}
 					/>
 					<Route path="/addConcert" element={<AddConcertForm />} />
 					<Route
 						path="/:concertId"
-						element={<ConcertDetails userId={userId} token={token} />}
+						element={
+							<ConcertDetails
+								userId={userId}
+								token={token}
+								is_staff={is_staff}
+								currentUser={currentUser}
+							/>
+						}
 					/>
 					<Route path="/:concertId/edit" element={<EditConcert />} />
 					<Route
 						path="/venues/"
-						element={<AllVenues userId={userId} token={token} />}
+						element={
+							<AllVenues
+								userId={userId}
+								token={token}
+								is_staff={is_staff}
+								currentUser={currentUser}
+							/>
+						}
 					/>
 					<Route path="/addVenue" element={<AddVenue />} />
 					<Route
 						path="/venues/:venueId"
-						element={<VenueDetails userId={userId} token={token} />}
+						element={
+							<VenueDetails
+								userId={userId}
+								token={token}
+								is_staff={is_staff}
+								currentUser={currentUser}
+							/>
+						}
 					/>
 					<Route path="/venues/:venueId/edit" element={<EditVenue />} />
 					<Route
 						path="/myprofile"
-						element={<ViewProfile userId={userId} token={token} />}
+						element={
+							<ViewProfile
+								userId={userId}
+								token={token}
+								is_staff={is_staff}
+								currentUser={currentUser}
+							/>
+						}
 					/>
 					<Route
 						path="/favoriteconcerts"
-						element={<FavoriteConcerts userId={userId} token={token} />}
+						element={
+							<FavoriteConcerts
+								userId={userId}
+								token={token}
+								is_staff={is_staff}
+								currentUser={currentUser}
+							/>
+						}
 					/>
 				</Route>
 			</Routes>

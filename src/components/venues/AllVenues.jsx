@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { getAllVenues } from "../../managers/VenueManager"
 import { useNavigate } from "react-router-dom"
 
-export const AllVenues = () => {
+export const AllVenues = ({ currentUser }) => {
 	const [allVenues, setAllVenues] = useState([])
 	const navigate = useNavigate()
 
@@ -21,13 +21,18 @@ export const AllVenues = () => {
              rounded-md text-center text-3xl font-sans underline font-extrabold">
 				All Venues
 			</h2>
-			<div
-				className="add-venue-button"
-				onClick={() => {
-					navigate(`/addVenue`)
-				}}>
-				Add Venue
-			</div>
+			{currentUser.is_staff === true ? (
+				<div
+					className="add-venue-button"
+					onClick={() => {
+						navigate(`/addVenue`)
+					}}>
+					Add Venue
+				</div>
+			) : (
+				""
+			)}
+
 			<article className="">
 				{allVenues.map((venue) => {
 					return (

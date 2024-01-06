@@ -6,7 +6,7 @@ import { getAllFavorites } from "../../managers/FavoritesManager"
 import concertFavorite from "../../assets/favorite.png"
 import concertUnFavorite from "../../assets/unfavorite.png"
 
-export const ConcertDetails = ({ userId }) => {
+export const ConcertDetails = ({ currentUser }) => {
 	const [chosenConcert, setChosenConcert] = useState({})
 	const [favorites, setFavorites] = useState([])
 	const { concertId } = useParams()
@@ -24,7 +24,7 @@ export const ConcertDetails = ({ userId }) => {
 
 	const handleFavorite = async () => {
 		const favoriteObject = {
-			user: userId,
+			user: currentUser.user_id,
 			concert: concertId,
 		}
 		await fetch(`http://localhost:8000/favorites`, {
@@ -42,7 +42,8 @@ export const ConcertDetails = ({ userId }) => {
 	const handleUnfavorite = async () => {
 		const favorite = favorites.find(
 			(obj) =>
-				obj.concert.id === chosenConcert.id && obj.user_id === parseInt(userId)
+				obj.concert.id === chosenConcert.id &&
+				obj.user_id === parseInt(currentUser.user_id)
 		)
 		console.log(favorite)
 		await fetch(`http://localhost:8000/favorites/${favorite.id}`, {
@@ -104,11 +105,15 @@ export const ConcertDetails = ({ userId }) => {
 					</div>
 				)}
 			</div>
-			<div>
-				<button type="button" onClick={() => navigate(`/${concertId}/edit`)}>
-					Edit Concert
-				</button>
-			</div>
+			{currentUser.is_staff === true ? (
+				<div>
+					<button type="button" onClick={() => navigate(`/${concertId}/edit`)}>
+						Edit Concert
+					</button>
+				</div>
+			) : (
+				""
+			)}
 		</section>
 	)
 }
