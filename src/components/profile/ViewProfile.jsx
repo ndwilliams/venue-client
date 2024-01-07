@@ -13,7 +13,7 @@ export const ViewProfile = ({ currentUser }) => {
 
 	useEffect(() => {
 		fetchAndSetMyProfile()
-	}, [])
+	}, [Editing])
 
 	return (
 		<>
@@ -23,6 +23,7 @@ export const ViewProfile = ({ currentUser }) => {
 					currentUser={currentUser}
 					Editing={Editing}
 					setEditing={setEditing}
+					fetchAndSetMyProfile={fetchAndSetMyProfile}
 				/>
 			) : (
 				<ProfileDetails

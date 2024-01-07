@@ -23,3 +23,18 @@ export const getConcertById = (concertId) => {
 		}).then((res) => res.json())
 	}
 }
+
+export const addConcert = async (concert) => {
+	const currentUser = JSON.parse(localStorage.getItem("current_user"))
+	if (currentUser && currentUser.token) {
+		const response = await fetch(`http://localhost:8000/concerts`, {
+			method: "POST",
+			headers: {
+				Authorization: `Token ${currentUser.token}`,
+				"Content-Type": "application/json",
+			},
+			body: concert,
+		})
+		return response
+	}
+}
