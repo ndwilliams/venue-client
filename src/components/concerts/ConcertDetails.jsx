@@ -2,7 +2,11 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getConcertById } from "../../managers/ConcertManager"
 import { formatDate, formatHour } from "../../utils/FormatDateTime"
-import { getAllFavorites } from "../../managers/FavoritesManager"
+import {
+	addFavorite,
+	deleteFavorite,
+	getAllFavorites,
+} from "../../managers/FavoritesManager"
 import concertFavorite from "../../assets/favorite.png"
 import concertUnFavorite from "../../assets/unfavorite.png"
 
@@ -22,20 +26,14 @@ export const ConcertDetails = ({ currentUser }) => {
 		})
 	}
 
-	const handleFavorite = async () => {
+	const handleAddFavorite = async (event) => {
+		event.preventDefault()
 		const favoriteObject = {
 			user: currentUser.user_id,
 			concert: concertId,
 		}
-		await fetch(`http://localhost:8000/favorites`, {
-			method: "POST",
-			headers: {
-				Authorization: `Token ${currentUser.token}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(favoriteObject),
-		})
-		fetchAndSetFavorites()
+		await addFavorite(favoriteObject)
+		await fetchAndSetFavorites()
 		fetchAndSetConcert()
 	}
 
@@ -45,15 +43,8 @@ export const ConcertDetails = ({ currentUser }) => {
 				obj.concert.id === chosenConcert.id &&
 				obj.user_id === parseInt(currentUser.user_id)
 		)
-		console.log(favorite)
-		await fetch(`http://localhost:8000/favorites/${favorite.id}`, {
-			method: "DELETE",
-			headers: {
-				Authorization: `Token ${currentUser.token}`,
-				"Content-Type": "application/json",
-			},
-		})
-		fetchAndSetFavorites()
+		await deleteFavorite(favorite)
+		await fetchAndSetFavorites()
 		fetchAndSetConcert()
 	}
 
@@ -99,7 +90,7 @@ export const ConcertDetails = ({ currentUser }) => {
 					</div>
 				) : (
 					<div className="favorite-container flex items-center justify-center gap-4 w-[220px]">
-						<button className="" onClick={handleFavorite}>
+						<button className="" onClick={handleAddFavorite}>
 							<img src={concertFavorite} alt="Favorite Concert" />
 						</button>
 					</div>

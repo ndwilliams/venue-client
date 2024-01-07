@@ -8,7 +8,9 @@ export const VenueDetails = ({ currentUser }) => {
 	const navigate = useNavigate()
 
 	const fetchAndSetVenue = () => {
-		getVenueById(venueId).then((venueObj) => setChosenVenue(venueObj))
+		getVenueById(venueId, currentUser).then((venueObj) =>
+			setChosenVenue(venueObj)
+		)
 	}
 
 	useEffect(() => {

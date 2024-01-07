@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { getAllBands } from "../../managers/BandManager"
+import { addNewBand, getAllBands } from "../../managers/BandManager"
 import { getAllVenues } from "../../managers/VenueManager"
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
@@ -7,16 +7,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { renderTimeViewClock } from "@mui/x-date-pickers/timeViewRenderers"
 import { useNavigate } from "react-router-dom"
+import { addConcert } from "../../managers/ConcertManager"
 
 export const AddConcertForm = () => {
 	const [bands, setBands] = useState([])
 	const [venues, setVenues] = useState([])
 	const [doorsOpen, setDoorsOpen] = useState(null)
 	const [showStarts, setShowStarts] = useState(null)
-	const [openers, changeOpeners] = useState([
-		{ id: 1, name: "The Rolling Stones", genre: "Rock & Roll" },
-		{ id: 2, name: "Jay-Z", genre: "Rap/Hip-Hop" },
-	])
 	const [chosenOpeners, updateChosenOpeners] = useState(new Set())
 	const [newConcert, setNewConcert] = useState({
 		band: 0,
@@ -35,7 +32,6 @@ export const AddConcertForm = () => {
 	const fetchAndSetBands = () => {
 		getAllBands().then((bandsArray) => {
 			setBands(bandsArray)
-			changeOpeners(bandsArray)
 		})
 	}
 
@@ -50,27 +46,16 @@ export const AddConcertForm = () => {
 		fetchAndSetAllVenues()
 	}, [])
 
-	const addConcert = async () => {
-		const response = await fetch(`http://localhost:8000/concerts`, {
-			method: "POST",
-			headers: {
-				Authorization: `Token ${localStorage.getItem("auth_token")}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
+	const handleSubmit = async (event) => {
+		event.preventDefault()
+		if (Object.values(newConcert).every(Boolean) && doorsOpen && showStarts) {
+			const concertObject = JSON.stringify({
 				...newConcert,
 				opening_bands: Array.from(chosenOpeners),
 				doors_open: doorsOpen.$d.toISOString(),
 				show_starts: showStarts.$d.toISOString(),
-			}),
-		})
-		return response
-	}
-
-	const handleSubmit = async (event) => {
-		event.preventDefault()
-		if (Object.values(newConcert).every(Boolean) && doorsOpen && showStarts) {
-			await addConcert()
+			})
+			await addConcert(concertObject)
 			navigate(`/`)
 		} else {
 			window.alert("Please Fill Out All The Necessary Fields")
@@ -97,24 +82,12 @@ export const AddConcertForm = () => {
 		setNewBand(bandCopy)
 	}
 
-	const postNewBand = async (newBand) => {
-		const response = await fetch(`http://localhost:8000/bands`, {
-			method: "POST",
-			headers: {
-				Authorization: `Token ${localStorage.getItem("auth_token")}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(newBand),
-		})
-		return response
-	}
-
 	const handleSubmitNewBand = async (event) => {
 		event.preventDefault()
-		await postNewBand(newBand)
+		await addNewBand(newBand)
+		setNewBand({ name: "", genre: "" })
 		addBand.current.close()
 		fetchAndSetBands()
-		setNewBand({ name: "", band: "" })
 	}
 
 	return (
@@ -197,7 +170,7 @@ export const AddConcertForm = () => {
 				<div className="headling-band">Headliner</div>
 				<select
 					name="band"
-					value={bands.id}
+					value={newConcert.band}
 					onChange={handleSelectInputChange}
 					className="add-concert-input">
 					<option value={0}>Please select a headliner</option>
@@ -222,7 +195,7 @@ export const AddConcertForm = () => {
 				<div className="venue">Venue</div>
 				<select
 					name="venue"
-					value={venues.id}
+					value={newConcert.venue}
 					onChange={handleSelectInputChange}
 					className="add-concert-input">
 					<option value={0}>Please select a venue</option>
@@ -240,7 +213,7 @@ export const AddConcertForm = () => {
 						<strong>Openers</strong>
 					</label>
 					<br />
-					{openers.map((band) => (
+					{bands.map((band) => (
 						<div key={`band-${band.id}`}>
 							<input
 								type="checkbox"

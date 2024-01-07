@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getVenueById } from "../../managers/VenueManager"
+import { editVenue, getVenueById } from "../../managers/VenueManager"
 
-export const EditVenue = () => {
+export const EditVenue = ({ currentUser }) => {
 	const { venueId } = useParams()
 	const navigate = useNavigate()
 
@@ -18,31 +18,16 @@ export const EditVenue = () => {
 		setVenue(venueCopy)
 	}
 
-	const editVenue = async () => {
-		const response = await fetch(
-			`http://localhost:8000/venues/${parseInt(venueId)}`,
-			{
-				method: "PUT",
-				headers: {
-					Authorization: `Token ${localStorage.getItem("auth_token")}`,
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(venue),
-			}
-		)
-		return response
-	}
-
 	const isNonEmpty = (value) => {
 		return value !== undefined && value !== null && value !== ""
 	}
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = async (event, venue) => {
 		event.preventDefault()
 		const isEveryValueTruthy = Object.values(venue).every(isNonEmpty)
 		if (isEveryValueTruthy) {
 			alert("Venue Successfully Edited!")
-			await editVenue()
+			await editVenue(currentUser, venue)
 			navigate(`/venues/${venueId}`)
 		} else {
 			window.alert("Please Fill Out All The Necessary Fields")

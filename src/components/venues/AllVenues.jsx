@@ -7,7 +7,7 @@ export const AllVenues = ({ currentUser }) => {
 	const navigate = useNavigate()
 
 	const fetchAndSetAllVenues = () => {
-		getAllVenues().then((venuesArray) => setAllVenues(venuesArray))
+		getAllVenues(currentUser).then((venuesArray) => setAllVenues(venuesArray))
 	}
 
 	useEffect(() => {

@@ -34,3 +34,30 @@ export const getCurrentUserFavorites = async () => {
 		return sortedfavoritedconcerts
 	}
 }
+
+export const addFavorite = async (favoriteObj) => {
+	const currentUser = JSON.parse(localStorage.getItem("current_user"))
+	if (currentUser && currentUser.token) {
+		await fetch(`http://localhost:8000/favorites`, {
+			method: "POST",
+			headers: {
+				Authorization: `Token ${currentUser.token}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(favoriteObj),
+		})
+	}
+}
+
+export const deleteFavorite = async (favorite) => {
+	const currentUser = JSON.parse(localStorage.getItem("current_user"))
+	if (currentUser && currentUser.token) {
+		await fetch(`http://localhost:8000/favorites/${favorite.id}`, {
+			method: "DELETE",
+			headers: {
+				Authorization: `Token ${currentUser.token}`,
+				"Content-Type": "application/json",
+			},
+		})
+	}
+}

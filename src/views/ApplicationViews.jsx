@@ -26,7 +26,10 @@ export const ApplicationViews = ({ currentUser, setUser }) => {
 						path="/:concertId"
 						element={<ConcertDetails currentUser={currentUser} />}
 					/>
-					<Route path="/:concertId/edit" element={<EditConcert />} />
+					<Route
+						path="/:concertId/edit"
+						element={<EditConcert currentUser={currentUser} />}
+					/>
 					<Route
 						path="/venues/"
 						element={<AllVenues currentUser={currentUser} />}

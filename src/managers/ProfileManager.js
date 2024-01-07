@@ -1,6 +1,6 @@
 export const getCurrentUserProfile = () => {
 	const currentUser = JSON.parse(localStorage.getItem("current_user"))
-	if (currentUser && currentUser.token && currentUser.user_id) {
+	if (currentUser && currentUser.token) {
 		return fetch(`http://localhost:8000/users/${currentUser.user_id}`, {
 			method: "GET",
 			headers: {
@@ -13,7 +13,7 @@ export const getCurrentUserProfile = () => {
 
 export const editUser = (updatedUser) => {
 	const currentUser = JSON.parse(localStorage.getItem("current_user"))
-	if (currentUser && currentUser.token && currentUser.user_id) {
+	if (currentUser && currentUser.token) {
 		return fetch(`http://localhost:8000/users/${currentUser.user_id}`, {
 			method: "PUT",
 			headers: {

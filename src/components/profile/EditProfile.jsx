@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { editUser } from "../../managers/ProfileManager"
 
-export const EditProfile = ({ token, myProfile, userId, setEditing }) => {
+export const EditProfile = ({ myProfile, setEditing }) => {
 	const [editedUser, setEditedUser] = useState(myProfile)
 
 	const handleChange = (event) => {
@@ -9,7 +9,7 @@ export const EditProfile = ({ token, myProfile, userId, setEditing }) => {
 		setEditedUser({ ...editedUser, [name]: value })
 	}
 
-	const handleSaveChanges = (event) => {
+	const handleSaveChanges = async (event) => {
 		event.preventDefault()
 
 		const updatedUser = {
@@ -20,7 +20,8 @@ export const EditProfile = ({ token, myProfile, userId, setEditing }) => {
 			is_staff: editedUser.is_staff,
 			is_superuser: editedUser.is_superuser,
 		}
-		editUser(updatedUser, token, userId).then(setEditing(false))
+		await editUser(updatedUser)
+		setEditing(false)
 	}
 
 	return (
