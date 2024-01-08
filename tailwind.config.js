@@ -4,5 +4,16 @@ export default {
 	theme: {
 		extend: {},
 	},
-	plugins: [],
+	plugins: [
+		function ({ addUtilities }) {
+			addUtilities(
+				{
+					".transition-once:hover": {
+						opacity: "0 !important",
+					},
+				},
+				["group"]
+			)
+		},
+	],
 }

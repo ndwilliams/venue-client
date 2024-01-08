@@ -40,41 +40,48 @@ export const Register = ({ setUser }) => {
 
 	return (
 		<main>
-			{/* <dialog className="dialog dialog--auth" ref={passwordDialog}>
-				<div>Passwords do not match up</div>
-				<button
-					className="close"
-					onClick={() => passwordDialog.current.close()}>
-					Close
-				</button>
-			</dialog> */}
-
 			<section className="text-center justify-center">
 				<h1 className="text-5xl m-4 p-4">Venue</h1>
 
 				<form
-					className="mx-auto w-2/3 text-center content-center justify-center bg-green-100
+					className="mx-auto w-1/2 text-center content-center justify-center bg-slate-400
 				bg-opacity-70 py-3 rounded-xl border-black border-4 shadow-lg"
 					onSubmit={handleRegister}>
-					<h2 className="text-4xl my-3">Create an account</h2>
+					<h2 className="text-4xl my-3">Create an Account</h2>
 					<label className="">First Name</label>
 					<fieldset className="m-1">
-						<input className="input rounded-md" type="text" ref={firstName} />
+						<input
+							className="input rounded-md border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 p-0.5"
+							type="text"
+							ref={firstName}
+						/>
 					</fieldset>
 
 					<label className="label">Last Name</label>
 					<fieldset className="m-1">
-						<input className="input rounded-md" type="text" ref={lastName} />
+						<input
+							className="input rounded-md border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 p-0.5"
+							type="text"
+							ref={lastName}
+						/>
 					</fieldset>
 
 					<label className="label">Username</label>
 					<fieldset className="m-1">
-						<input className="input rounded-md" type="text" ref={username} />
+						<input
+							className="input rounded-md border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 p-0.5"
+							type="text"
+							ref={username}
+						/>
 					</fieldset>
 
 					<label className="label">Email</label>
 					<fieldset className="m-1">
-						<input className="input rounded-md" type="email" ref={email} />
+						<input
+							className="input rounded-md border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 p-0.5"
+							type="email"
+							ref={email}
+						/>
 					</fieldset>
 
 					<label className="label">Password</label>
@@ -82,7 +89,7 @@ export const Register = ({ setUser }) => {
 						<fieldset className="m-1">
 							<p className="control is-expanded p-2">
 								<input
-									className="input rounded-md"
+									className=" input rounded-md border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 p-0.5"
 									type="password"
 									ref={password}
 								/>
@@ -92,7 +99,7 @@ export const Register = ({ setUser }) => {
 						<fieldset>
 							<p className="control is-expanded p-2">
 								<input
-									className="input rounded-md"
+									className="md input rounded-md border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-200 p-0.5"
 									type="password"
 									ref={verifyPassword}
 								/>
@@ -101,7 +108,7 @@ export const Register = ({ setUser }) => {
 						<label className="label">Are You Staff?</label>
 						<fieldset className="m-1">
 							<input
-								className="rounded-md"
+								className="rounded-md focus:ring-0 shadow-md checked:shadow-xl border-blue-200 h-4 w-4"
 								type="checkbox"
 								ref={is_staff_checkbox}
 							/>

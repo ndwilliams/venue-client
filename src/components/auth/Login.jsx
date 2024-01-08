@@ -27,7 +27,7 @@ export const Login = ({ setUser }) => {
 	}
 
 	return (
-		<main>
+		<main className="bg-gray-100 min-h-screen flex items-center justify-center">
 			<dialog className="dialog dialog--auth" ref={Dialog}>
 				<div>Username or Password is not valid</div>
 				<button className="close" onClick={() => Dialog.current.close()}>
@@ -35,13 +35,13 @@ export const Login = ({ setUser }) => {
 				</button>
 			</dialog>
 
-			<section className="text-center justify-center">
-				<h1 className="text-5xl m-3 pb-3">Venue</h1>
+			<section className="bg-white p-8 py-10 rounded-lg shadow-lg w-1/2">
+				<h1 className="text-center text-5xl m-3 pb-3">Venue</h1>
 				<form
-					className="mx-auto w-2/3 text-center content-center justify-center bg-green-100
+					className="mx-auto text-center content-center justify-center bg-slate-400
 				bg-opacity-70 py-3 rounded-xl border-black border-4 shadow-lg"
 					onSubmit={handleLogin}>
-					<h2 className="text-4xl my-3">Please sign in</h2>
+					<h2 className="text-4xl my-3">Login</h2>
 					<fieldset className="m-1">
 						<div className="form-group">
 							<label className="label">Username</label>
@@ -77,13 +77,15 @@ export const Login = ({ setUser }) => {
 					<div className="">
 						<div className="">
 							<button
-								className="px-1 py-0.5 my-1 bg-green-600 border-black border-2 rounded-lg transition-color hover:bg-green-400 duration-200 delay-50"
+								className="px-1 py-0.5 my-1 bg-green-500 border-black border-2 rounded-lg transition-color hover:bg-green-400 duration-200 delay-75"
 								type="submit">
 								Submit
 							</button>
 						</div>
-						<div className="">
-							<Link to="/register" className="">
+						<div className="text-center">
+							<Link
+								className="text-black hover:text-green-700 visited:text-black transition-color duration-150 delay-75"
+								to="/register">
 								Not a Concert Goer Yet?
 							</Link>
 						</div>
