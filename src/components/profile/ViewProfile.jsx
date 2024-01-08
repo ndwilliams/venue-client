@@ -16,7 +16,7 @@ export const ViewProfile = ({ currentUser }) => {
 	}, [Editing])
 
 	return (
-		<>
+		<div className="bg-slate-300">
 			{Editing ? (
 				<EditProfile
 					myProfile={myProfile}
@@ -33,6 +33,6 @@ export const ViewProfile = ({ currentUser }) => {
 					setEditing={setEditing}
 				/>
 			)}
-		</>
+		</div>
 	)
 }

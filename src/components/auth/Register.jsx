@@ -42,10 +42,9 @@ export const Register = ({ setUser }) => {
 		<main>
 			<section className="text-center justify-center">
 				<h1 className="text-5xl m-4 p-4">Venue</h1>
-
 				<form
 					className="mx-auto w-1/2 text-center content-center justify-center bg-slate-400
-				bg-opacity-70 py-3 rounded-xl border-black border-4 shadow-lg"
+				bg-opacity-80 py-3 rounded-xl border-black border-4 shadow-lg"
 					onSubmit={handleRegister}>
 					<h2 className="text-4xl my-3">Create an Account</h2>
 					<label className="">First Name</label>
