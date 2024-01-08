@@ -23,17 +23,29 @@ export const getVenueById = (venueId) => {
 export const editVenue = async (venue) => {
 	const currentUser = JSON.parse(localStorage.getItem("current_user"))
 	if (currentUser && currentUser.token) {
-		const response = await fetch(
-			`http://localhost:8000/venues/${parseInt(venue.id)}`,
-			{
-				method: "PUT",
-				headers: {
-					Authorization: `Token ${currentUser.token}`,
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(venue),
-			}
-		)
+		const response = await fetch(`http://localhost:8000/venues/${venue.id}`, {
+			method: "PUT",
+			headers: {
+				Authorization: `Token ${currentUser.token}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(venue),
+		})
+		return response
+	}
+}
+
+export const addVenue = async (newVenue) => {
+	const currentUser = JSON.parse(localStorage.getItem("current_user"))
+	if (currentUser && currentUser.token) {
+		const response = await fetch(`http://localhost:8000/venues`, {
+			method: "POST",
+			headers: {
+				Authorization: `Token ${currentUser.token}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newVenue),
+		})
 		return response
 	}
 }

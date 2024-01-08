@@ -11,7 +11,7 @@ export const AllConcerts = ({ currentUser }) => {
 	const [allConcerts, setAllConcerts] = useState([])
 	const [filteredConcerts, setFilteredConcerts] = useState([])
 	const [selectedDate, setSelectedDate] = useState(null)
-	const [venueSelection, setVenueSelection] = useState([])
+	const [selectedVenue, setSelectedVenue] = useState(null)
 	const [allVenues, setAllVenues] = useState([])
 	const navigate = useNavigate()
 
@@ -22,38 +22,42 @@ export const AllConcerts = ({ currentUser }) => {
 	const fetchAndSetAllVenues = () => {
 		getAllVenues().then((venuesArray) => setAllVenues(venuesArray))
 	}
-
 	useEffect(() => {
 		fetchAndSetAllConcerts()
 		fetchAndSetAllVenues()
 	}, [])
 
 	useEffect(() => {
-		if (venueSelection > 0) {
-			const concertsAtVenue = allConcerts.filter(
-				(concert) => concert.venue.id === parseInt(venueSelection)
-			)
-			setFilteredConcerts(concertsAtVenue)
-		} else {
-			setFilteredConcerts(allConcerts)
-		}
-	}, [allConcerts, venueSelection])
-
-	useEffect(() => {
-		if (selectedDate) {
+		if (parseInt(selectedVenue) && selectedDate) {
 			const reactDate = new Date(selectedDate)
-			const filteredConcertsByDate = allConcerts.filter(
+			const filteredConcerts = allConcerts.filter(
+				(concert) =>
+					concert.venue.id === parseInt(selectedVenue) &&
+					reactDate.getFullYear() ===
+						new Date(concert.show_starts).getFullYear() &&
+					reactDate.getMonth() === new Date(concert.show_starts).getMonth() &&
+					reactDate.getDate() === new Date(concert.show_starts).getDate()
+			)
+			setFilteredConcerts(filteredConcerts)
+		} else if (parseInt(selectedVenue)) {
+			const filteredConcerts = allConcerts.filter(
+				(concert) => concert.venue.id === parseInt(selectedVenue)
+			)
+			setFilteredConcerts(filteredConcerts)
+		} else if (selectedDate) {
+			const reactDate = new Date(selectedDate)
+			const filteredConcerts = allConcerts.filter(
 				(concert) =>
 					reactDate.getFullYear() ===
 						new Date(concert.show_starts).getFullYear() &&
 					reactDate.getMonth() === new Date(concert.show_starts).getMonth() &&
 					reactDate.getDate() === new Date(concert.show_starts).getDate()
 			)
-			setFilteredConcerts(filteredConcertsByDate)
+			setFilteredConcerts(filteredConcerts)
 		} else {
 			setFilteredConcerts(allConcerts)
 		}
-	}, [allConcerts, selectedDate])
+	}, [allConcerts, selectedVenue, selectedDate])
 
 	return (
 		<div className="py-3">
@@ -68,10 +72,10 @@ export const AllConcerts = ({ currentUser }) => {
 					selected={selectedDate}
 					dateFormat="dd/MM/yyyy"
 				/>
-				<button onClick={() => setSelectedDate(null)}>Reset Filters</button>
+				<button onClick={() => setSelectedDate(null)}>Reset Date Filter</button>
 			</div>
 			<FilterConcertsByVenue
-				setVenueSelection={setVenueSelection}
+				setSelectedVenue={setSelectedVenue}
 				allVenues={allVenues}
 			/>
 			{currentUser.is_staff === true ? (
