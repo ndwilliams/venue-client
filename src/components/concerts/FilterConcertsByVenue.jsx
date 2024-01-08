@@ -3,7 +3,7 @@ export const FilterConcertsByVenue = ({ setSelectedVenue, allVenues }) => {
 		<div className="flex justify-between mx-20 my-4">
 			<select
 				id="venues"
-				className="text-center text-xl w-48 border-2 border-red-400 rounded-xl"
+				className="text-center bg-amber-600 outline-1 text-lg px-3 py-1 border-black border-2 rounded-lg transition-color hover:bg-amber-400 duration-200 delay-50"
 				onChange={(event) => {
 					setSelectedVenue(event.target.value)
 				}}>

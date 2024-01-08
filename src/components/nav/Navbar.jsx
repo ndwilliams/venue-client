@@ -1,99 +1,54 @@
-import { useRef } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 
-export const NavBar = ({ currentUser }) => {
+export const NavBar = () => {
 	const navigate = useNavigate()
-	const navbar = useRef()
-	const hamburger = useRef()
-
-	const showMobileNavbar = () => {
-		hamburger.current.classList.toggle("is-active")
-		navbar.current.classList.toggle("is-active")
-	}
 
 	return (
-		<nav
-			className="navbar is-success mb-3"
-			role="navigation"
-			aria-label="main navigation">
-			<div className="navbar-brand">
-				<a className="navbar-item" href="/">
-					{/* <img src={Logo} height="3rem" alt="Rare Logo" />{" "} */}
-					<h1 className="title is-4">Rare Publishing</h1>
-				</a>
+		<nav className="navbar bg-white/90 custom-shadow custom-border-radius py-4 px-6 m-3">
+			<ul className="flex justify-around items-center">
+				<li>
+					<NavLink
+						to="/"
+						className="text-gray-700 hover:text-purple-700 px-4 py-2 text-lg font-medium">
+						Home
+					</NavLink>
+				</li>
 
-				<a
-					role="button"
-					className="navbar-burger"
-					aria-label="menu"
-					aria-expanded="false"
-					data-target="navbarBasicExample"
-					onClick={showMobileNavbar}
-					ref={hamburger}>
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-				</a>
-			</div>
+				<li>
+					<NavLink
+						to="/venues"
+						className="text-gray-700 hover:text-purple-700 px-4 py-2 text-lg font-medium">
+						Venues
+					</NavLink>
+				</li>
 
-			<div className="navbar-menu" ref={navbar}>
-				<div className="navbar-start">
-					{currentUser.token ? (
-						<>
-							<Link to="/venues" className="navbar-item">
-								Venues
-							</Link>
-						</>
-					) : (
-						""
-					)}
-				</div>
-				<div className="navbar-start">
-					{currentUser.token ? (
-						<Link to="/myprofile" className="navbar-item">
-							Profile
-						</Link>
-					) : (
-						""
-					)}
-				</div>
-				<div className="navbar-start">
-					{currentUser.token ? (
-						<Link to="/favoriteconcerts" className="navbar-item">
-							Favorites
-						</Link>
-					) : (
-						""
-					)}
-				</div>
+				<li>
+					<NavLink
+						to="/myprofile"
+						className="text-gray-700 hover:text-purple-700 px-4 py-2 text-lg font-medium">
+						Profile
+					</NavLink>
+				</li>
+				<li>
+					<NavLink
+						to="/favoriteconcerts"
+						className="text-gray-700 hover:text-purple-700 px-4 py-2 text-lg font-medium">
+						Favorites
+					</NavLink>
+				</li>
 
-				<div className="navbar-end">
-					<div className="navbar-item">
-						<div className="buttons">
-							{currentUser.token ? (
-								<button
-									className="button is-outlined"
-									onClick={() => {
-										localStorage.removeItem("current_user")
-										navigate("/login")
-									}}>
-									Logout
-								</button>
-							) : (
-								<>
-									<Link to="/register" className="button is-link">
-										Register
-									</Link>
-									<Link to="/login" className="button is-outlined">
-										Login
-									</Link>
-								</>
-							)}
-						</div>
-					</div>
-				</div>
-			</div>
+				<li>
+					<button
+						className="text-gray-700 hover:text-purple-700 px-4 py-2 text-lg font-medium"
+						onClick={() => {
+							localStorage.removeItem("current_user")
+							navigate("/login")
+						}}>
+						Logout
+					</button>
+				</li>
+			</ul>
 		</nav>
 	)
 }

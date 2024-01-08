@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.custom-shadow {
+		box-shadow: 0px 0px 20px rgb(0, 26, 2); /* Adjust the values as needed */
+	}
+}
+
+@layer utilities {
+	.custom-border-radius {
+		border-radius: 100px; /* Example value, adjust as needed */
+	}
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+}
+
+body {
+	position: relative;
+}
+
+body::before {
+	content: "";
+	background: url("/src/assets/venue_background.png") no-repeat center center
+		fixed;
+	background-size: cover;
+	opacity: 80%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
+	z-index: -1;
+}

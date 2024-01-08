@@ -60,53 +60,60 @@ export const AllConcerts = ({ currentUser }) => {
 	}, [allConcerts, selectedVenue, selectedDate])
 
 	return (
-		<div className="py-3">
-			<h2
-				className="bg-zinc-400 bg-opacity-80 m-auto max-w-min
-             rounded-md text-center text-3xl font-sans underline font-extrabold">
-				All Concerts
-			</h2>
-			<div className="p-1 min-w-full bg-slate-500">
-				<DatePicker
-					onChange={(date) => setSelectedDate(date)}
-					selected={selectedDate}
-					dateFormat="dd/MM/yyyy"
-				/>
-				<button onClick={() => setSelectedDate(null)}>Reset Date Filter</button>
-			</div>
-			<FilterConcertsByVenue
-				setSelectedVenue={setSelectedVenue}
-				allVenues={allVenues}
-			/>
-			{currentUser.is_staff === true ? (
-				<div
-					className="add-concert-button"
-					onClick={() => {
-						navigate(`/addConcert`)
-					}}>
-					Add Concert
+		<div className="all-concerts-container">
+			<div className="headers-container flex justify-around items-center">
+				<div className="date-picker-and-filter-reset-container flex justify-around items-center px-5">
+					<div className="date-picker px-3">
+						<DatePicker
+							className="date-picker bg-amber-600  py-1 text-lg placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50"
+							placeholderText="Select Date"
+							onChange={(date) => setSelectedDate(date)}
+							selected={selectedDate}
+							dateFormat="dd/MM/yyyy"
+						/>
+					</div>
+					<button
+						className="date-filter-reset-button bg-amber-600 outline-1 text-lg px-5 py-1 border-black border-2 rounded-lg transition-color hover:bg-amber-400 duration-200 delay-50"
+						onClick={() => setSelectedDate(null)}>
+						Reset Date Filter
+					</button>
 				</div>
-			) : (
-				""
-			)}
 
-			<article className="">
+				{currentUser.is_staff === true ? (
+					<div className="add-concert-container">
+						<button
+							className="add-concert-button bg-amber-600 outline-1 text-lg px-3 py-1 border-black border-2 rounded-lg transition-color hover:bg-amber-400 duration-200 delay-50"
+							onClick={() => {
+								navigate(`/addConcert`)
+							}}>
+							Add Concert
+						</button>
+					</div>
+				) : (
+					""
+				)}
+				<div className="venue-filter-container">
+					<FilterConcertsByVenue
+						setSelectedVenue={setSelectedVenue}
+						allVenues={allVenues}
+					/>
+				</div>
+			</div>
+
+			<article className="max-w-2/3">
 				{filteredConcerts.map((concert) => {
 					return (
 						<section
 							key={concert.id}
-							className="flex justify-between p-5 mx-8 my-5 border-4 scale-100
-                            bg-green-100 bg-opacity-90 border-green-500 rounded-xl
-                            hover:scale-110 transition-transform duration-300"
+							className="flex justify-around p-5 mx-4 my-3 border-4 scale-[.80]
+                            bg-amber-500 bg-opacity-90 border-amber-600 rounded-xl
+                            hover:scale-[.90] hover:cursor-pointer transition-transform duration-500 text-center text-xl font-semibold"
 							onClick={() => {
 								navigate(`/${concert.id}`)
 							}}>
-							<div className="pt-1.5">{concert.band.name}</div>
-							<div className="pt-2">{concert.venue.name}</div>
-							<div className="pt-2">
-								{formatFullDateTime(concert.show_starts)}
-							</div>
-							<div className=""></div>
+							<div className="">{concert.band.name}</div>
+							<div className="">{concert.venue.name}</div>
+							<div className="">{formatFullDateTime(concert.show_starts)}</div>
 						</section>
 					)
 				})}

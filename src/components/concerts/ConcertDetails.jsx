@@ -7,12 +7,13 @@ import {
 	deleteFavorite,
 	getAllFavorites,
 } from "../../managers/FavoritesManager"
-import concertFavorite from "../../assets/favorite.png"
-import concertUnFavorite from "../../assets/unfavorite.png"
+import Favorited from "../../assets/favorited.png"
+import UnFavorited from "../../assets/unfavorited.png"
 
 export const ConcertDetails = ({ currentUser }) => {
 	const [chosenConcert, setChosenConcert] = useState({})
 	const [favorites, setFavorites] = useState([])
+	const [transitionClass, setTransitionClass] = useState("")
 	const { concertId } = useParams()
 	const navigate = useNavigate()
 
@@ -32,9 +33,13 @@ export const ConcertDetails = ({ currentUser }) => {
 			user: currentUser.user_id,
 			concert: concertId,
 		}
+		setTransitionClass("transition-once")
 		await addFavorite(favoriteObject)
-		await fetchAndSetFavorites()
+		fetchAndSetFavorites()
 		fetchAndSetConcert()
+		setTimeout(() => {
+			setTransitionClass("")
+		}, 250)
 	}
 
 	const handleUnfavorite = async () => {
@@ -43,9 +48,14 @@ export const ConcertDetails = ({ currentUser }) => {
 				obj.concert.id === chosenConcert.id &&
 				obj.user_id === parseInt(currentUser.user_id)
 		)
+
 		await deleteFavorite(favorite)
-		await fetchAndSetFavorites()
+		setTransitionClass("transition-once")
+		fetchAndSetFavorites()
 		fetchAndSetConcert()
+		setTimeout(() => {
+			setTransitionClass("")
+		}, 250)
 	}
 
 	useEffect(() => {
@@ -56,42 +66,69 @@ export const ConcertDetails = ({ currentUser }) => {
 	return (
 		<section
 			key={chosenConcert.id}
-			className="mx-auto w-1/2 text-center font-sans text-lg content-center
-        my-10 bg-blue-400 bg-opacity-80 rounded-3xl">
-			<div className="headlining-band p-1">{chosenConcert.band?.name}</div>
-			<div className="opening-bands p-0.5">
-				With:
+			className="mx-auto w-1/2 text-center font-sans text-lg font-semibold content-center
+        my-10 bg-amber-500 bg-opacity-80 rounded-3xl py-4">
+			<div className="headlining-band text-2xl">{chosenConcert.band?.name}</div>
+			<div className="concert-date italic py-1">
+				{formatDate(chosenConcert.show_starts)}
+			</div>
+			<div>With:</div>
+			<div className="opening-bands flex justify-around py-2">
 				{chosenConcert.opening_bands?.map((openerObj) => {
 					return (
-						<div key={openerObj.id} className="opener-name p-0.5">
+						<div key={openerObj.id} className="opener-name ">
 							{openerObj.name}
 						</div>
 					)
 				})}
 			</div>
-			<div className="venue-name p-1">At: {chosenConcert.venue?.name}</div>
-			<div className="concert-date p-1">
-				{formatDate(chosenConcert.show_starts)}
+			<div className="venue-name p-1 text-xl">
+				At: {chosenConcert.venue?.name}
+			</div>
+			<div className="concert-start-time p-1 text-xl">
+				<span>Show Starts: </span>
+				{formatHour(chosenConcert.show_starts)}
 			</div>
 			<div className="doors-open-time p-1">
 				<span>Doors Open: </span>
 				{formatHour(chosenConcert.doors_open)}
 			</div>
-			<div className="concert-start-time p-1">
-				<span>Show Starts: </span>
-				{formatHour(chosenConcert.show_starts)}
-			</div>
+
 			<div className="">
 				{chosenConcert.current_user_is_favorited ? (
-					<div className="unfavorite-container flex items-center justify-center gap-4 w-[220px]">
-						<button className="" onClick={handleUnfavorite}>
-							<img src={concertUnFavorite} alt="Unfavorite Concert" />
+					<div className="unfavorite-container flex items-center justify-center">
+						<button
+							className={`w-40 h-40 relative group ${transitionClass}`}
+							onClick={handleUnfavorite}>
+							<img
+								src={UnFavorited}
+								alt="Unfavorite Concert"
+								className="h-100% w-100% object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+							/>
+
+							<img
+								src={Favorited}
+								alt="Favorite Concert"
+								className="h-100% w-100% object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+							/>
 						</button>
 					</div>
 				) : (
-					<div className="favorite-container flex items-center justify-center gap-4 w-[220px]">
-						<button className="" onClick={handleAddFavorite}>
-							<img src={concertFavorite} alt="Favorite Concert" />
+					<div className="favorite-container flex items-center justify-center">
+						<button
+							className={`w-40 h-40 relative group ${transitionClass}`}
+							onClick={handleAddFavorite}>
+							<img
+								src={Favorited}
+								alt="Favorite Concert"
+								className="h-100% w-100% object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+							/>
+
+							<img
+								src={UnFavorited}
+								alt="Unfavorite Concert"
+								className="h-100% w-100% object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+							/>
 						</button>
 					</div>
 				)}
