@@ -268,14 +268,14 @@ export const EditConcert = () => {
 							<button
 								type="button"
 								className="hide-concert-button"
-								onClick={() => {
+								onClick={async () => {
 									if (
 										window.confirm(
 											"Are you sure you wish to hide this concert?"
 										)
 									) {
-										setEditedConcert({ ...editedConcert, active: false })
-										editConcert()
+										await setEditedConcert({ ...editedConcert, active: false })
+										editConcert(editedConcert)
 									}
 								}}>
 								Hide Concert
@@ -286,14 +286,14 @@ export const EditConcert = () => {
 							<button
 								type="button"
 								className="unhide-concert-button"
-								onClick={() => {
+								onClick={async () => {
 									if (
 										window.confirm(
 											"Are you sure you wish to activate this concert?"
 										)
 									) {
-										setEditedConcert({ ...editedConcert, active: true })
-										editConcert()
+										await setEditedConcert({ ...editedConcert, active: true })
+										editConcert(editedConcert)
 									}
 								}}>
 								Activate Concert

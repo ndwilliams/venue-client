@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { addVenue } from "../../managers/VenueManager"
 
 export const AddVenue = () => {
 	const [newVenue, setNewVenue] = useState({
@@ -13,33 +14,21 @@ export const AddVenue = () => {
 	})
 	const navigate = useNavigate()
 
-	const addVenue = async () => {
-		const response = await fetch(`http://localhost:8000/venues`, {
-			method: "POST",
-			headers: {
-				Authorization: `Token ${localStorage.getItem("auth_token")}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(newVenue),
-		})
-		return response
+	const handleInputChange = (event) => {
+		const venueCopy = { ...newVenue }
+		venueCopy[event.target.name] = event.target.value
+		setNewVenue(venueCopy)
 	}
 
 	const handleSubmit = async (event) => {
 		event.preventDefault()
 		if (Object.values(newVenue).every(Boolean)) {
 			alert("Venue Successfully Added!")
-			await addVenue()
+			await addVenue(newVenue)
 			navigate(`/venues`)
 		} else {
 			alert("Please Fill Out All The Necessary Fields")
 		}
-	}
-
-	const handleInputChange = (event) => {
-		const venueCopy = { ...newVenue }
-		venueCopy[event.target.name] = event.target.value
-		setNewVenue(venueCopy)
 	}
 
 	return (

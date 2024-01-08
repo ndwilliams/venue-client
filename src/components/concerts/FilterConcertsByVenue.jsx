@@ -1,11 +1,11 @@
-export const FilterConcertsByVenue = ({ setVenueSelection, allVenues }) => {
+export const FilterConcertsByVenue = ({ setSelectedVenue, allVenues }) => {
 	return (
 		<div className="flex justify-between mx-20 my-4">
 			<select
-				id="venuess"
+				id="venues"
 				className="text-center text-xl w-48 border-2 border-red-400 rounded-xl"
 				onChange={(event) => {
-					setVenueSelection(event.target.value)
+					setSelectedVenue(event.target.value)
 				}}>
 				<option value={0}>Filter By Venue</option>
 				{allVenues.map((venueObj) => {

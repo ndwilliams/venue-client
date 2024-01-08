@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { editVenue, getVenueById } from "../../managers/VenueManager"
 
-export const EditVenue = ({ currentUser }) => {
+export const EditVenue = () => {
 	const { venueId } = useParams()
 	const navigate = useNavigate()
 
@@ -22,12 +22,12 @@ export const EditVenue = ({ currentUser }) => {
 		return value !== undefined && value !== null && value !== ""
 	}
 
-	const handleSubmit = async (event, venue) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault()
 		const isEveryValueTruthy = Object.values(venue).every(isNonEmpty)
 		if (isEveryValueTruthy) {
 			alert("Venue Successfully Edited!")
-			await editVenue(currentUser, venue)
+			await editVenue(venue)
 			navigate(`/venues/${venueId}`)
 		} else {
 			window.alert("Please Fill Out All The Necessary Fields")
@@ -116,7 +116,7 @@ export const EditVenue = ({ currentUser }) => {
 									window.confirm("Are you sure you wish to hide this venue?")
 								) {
 									setVenue({ ...venue, active: false })
-									handleSubmit()
+									editVenue(venue)
 								}
 							}}>
 							Hide Venue
@@ -134,7 +134,7 @@ export const EditVenue = ({ currentUser }) => {
 									)
 								) {
 									setVenue({ ...venue, active: true })
-									handleSubmit()
+									editVenue(venue)
 								}
 							}}>
 							Activate Venue
