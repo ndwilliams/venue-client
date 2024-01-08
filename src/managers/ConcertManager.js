@@ -38,3 +38,21 @@ export const addConcert = async (concert) => {
 		return response
 	}
 }
+
+export const editConcert = async (concert) => {
+	const currentUser = JSON.parse(localStorage.getItem("current_user"))
+	if (currentUser && currentUser.token) {
+		const response = await fetch(
+			`http://localhost:8000/concerts/${concert.id}`,
+			{
+				method: "PUT",
+				headers: {
+					Authorization: `Token ${currentUser.token}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(concert),
+			}
+		)
+		return response
+	}
+}

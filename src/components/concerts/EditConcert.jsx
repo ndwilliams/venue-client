@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getAllBands } from "../../managers/BandManager"
+import { addNewBand, getAllBands } from "../../managers/BandManager"
 import { getAllVenues } from "../../managers/VenueManager"
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
-import { getConcertById } from "../../managers/ConcertManager"
+import { editConcert, getConcertById } from "../../managers/ConcertManager"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { renderTimeViewClock } from "@mui/x-date-pickers/timeViewRenderers"
 import dayjs from "dayjs"
@@ -31,6 +31,7 @@ export const EditConcert = () => {
 	const fetchAndSetConcert = () => {
 		getConcertById(concertId).then((concertObj) =>
 			setEditedConcert({
+				id: concertObj.id,
 				venue: concertObj.venue.id,
 				band: concertObj.band.id,
 				active: concertObj.active,
@@ -67,40 +68,6 @@ export const EditConcert = () => {
 		updateChosenOpeners(openersCopy)
 	}, [editedConcert])
 
-	const editConcert = async () => {
-		const response = await fetch(
-			`http://localhost:8000/concerts/${concertId}`,
-			{
-				method: "PUT",
-				headers: {
-					Authorization: `Token ${localStorage.getItem("auth_token")}`,
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					...editedConcert,
-					opening_bands: Array.from(chosenOpeners),
-				}),
-			}
-		)
-		return response
-	}
-
-	const isNonEmpty = (value) => {
-		return value !== undefined && value !== null && value !== ""
-	}
-
-	const handleSubmit = async (event) => {
-		event.preventDefault()
-		const isEveryValueTruthy = Object.values(editedConcert).every(isNonEmpty)
-		if (isEveryValueTruthy) {
-			alert("Concert Successfully Edited!")
-			await editConcert()
-			navigate(`/${concertId}`)
-		} else {
-			window.alert("Please Fill Out All The Necessary Fields")
-		}
-	}
-
 	const handleSelectInputChange = (e) => {
 		const concertCopy = { ...editedConcert }
 		concertCopy[e.target.name] = parseInt(e.target.value)
@@ -121,24 +88,32 @@ export const EditConcert = () => {
 		setNewBand(bandCopy)
 	}
 
-	const postNewBand = async (newBand) => {
-		const response = await fetch(`http://localhost:8000/bands`, {
-			method: "POST",
-			headers: {
-				Authorization: `Token ${localStorage.getItem("auth_token")}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(newBand),
-		})
-		return response
-	}
-
 	const handleSubmitNewBand = async (event) => {
 		event.preventDefault()
-		await postNewBand(newBand)
+		await addNewBand(newBand)
 		addBand.current.close()
 		fetchAndSetBands()
 		setNewBand({ name: "", band: "" })
+	}
+
+	const isNonEmpty = (value) => {
+		return value !== undefined && value !== null && value !== ""
+	}
+
+	const handleSubmit = async (event) => {
+		event.preventDefault()
+		const isEveryValueTruthy = Object.values(editedConcert).every(isNonEmpty)
+		if (isEveryValueTruthy) {
+			const concertCopy = {
+				...editedConcert,
+				opening_bands: Array.from(chosenOpeners),
+			}
+			await editConcert(concertCopy)
+			alert("Concert Successfully Edited!")
+			navigate(`/${concertId}`)
+		} else {
+			window.alert("Please Fill Out All The Necessary Fields")
+		}
 	}
 
 	return (
