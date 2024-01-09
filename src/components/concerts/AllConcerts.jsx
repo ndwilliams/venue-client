@@ -65,7 +65,7 @@ export const AllConcerts = ({ currentUser }) => {
 				<div className="date-picker-and-filter-reset-container flex justify-around items-center px-5">
 					<div className="date-picker px-3">
 						<DatePicker
-							className="date-picker bg-amber-600  py-1 text-lg placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50"
+							className="date-picker bg-slate-200  py-1 text-lg placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-slate-300 duration-200 delay-50"
 							placeholderText="Select Date"
 							onChange={(date) => setSelectedDate(date)}
 							selected={selectedDate}
@@ -73,7 +73,7 @@ export const AllConcerts = ({ currentUser }) => {
 						/>
 					</div>
 					<button
-						className="date-filter-reset-button bg-amber-600 outline-1 text-lg px-5 py-1 border-black border-2 rounded-lg transition-color hover:bg-amber-400 duration-200 delay-50"
+						className="date-filter-reset-button bg-slate-200 outline-1 text-lg px-5 py-1 border-black border-2 rounded-lg transition-color hover:bg-slate-300 duration-200 delay-50"
 						onClick={() => setSelectedDate(null)}>
 						Reset Date Filter
 					</button>
@@ -82,7 +82,7 @@ export const AllConcerts = ({ currentUser }) => {
 				{currentUser.is_staff === true ? (
 					<div className="add-concert-container">
 						<button
-							className="add-concert-button bg-amber-600 outline-1 text-lg px-3 py-1 border-black border-2 rounded-lg transition-color hover:bg-amber-400 duration-200 delay-50"
+							className="add-concert-button bg-white/90 outline-1 text-lg px-3 py-1 border-black border-2 rounded-lg transition-color hover:bg-white/60 duration-200 delay-50"
 							onClick={() => {
 								navigate(`/addConcert`)
 							}}>
@@ -105,7 +105,7 @@ export const AllConcerts = ({ currentUser }) => {
 					return (
 						<section
 							key={concert.id}
-							className="flex justify-around p-5 mx-4 my-3 border-4 scale-[.80]
+							className="flex justify-between items-center p-5 mx-4 my-3 border-4 scale-[.80]
                             bg-amber-500 bg-opacity-90 border-amber-600 rounded-xl
                             hover:scale-[.90] hover:cursor-pointer transition-transform duration-500 text-center text-xl font-semibold"
 							onClick={() => {

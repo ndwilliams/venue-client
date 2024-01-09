@@ -135,7 +135,10 @@ export const ConcertDetails = ({ currentUser }) => {
 			</div>
 			{currentUser.is_staff === true ? (
 				<div>
-					<button type="button" onClick={() => navigate(`/${concertId}/edit`)}>
+					<button
+						className="bg-slate-300 hover:cursor-pointer hover:bg-slate-400 duration-300 py-2 px-4 font-medium rounded-lg border-2 border-slate-600"
+						type="button"
+						onClick={() => navigate(`/${concertId}/edit`)}>
 						Edit Concert
 					</button>
 				</div>

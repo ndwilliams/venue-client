@@ -226,7 +226,7 @@ export const EditConcert = () => {
 					<div>
 						<button
 							type="button"
-							className="add-new-band add-new-band bg-amber-600 py-1 px-4 text-md placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50"
+							className="add-new-band add-new-band bg-amber-400 py-1 px-4 text-md placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-amber-300 duration-200 delay-50"
 							onClick={() => {
 								addBand.current.showModal()
 							}}>
@@ -258,9 +258,7 @@ export const EditConcert = () => {
 					</label>
 					<div className="openers-container flex justify-evenly flex-wrap">
 						{openers.map((band) => (
-							<div
-								key={`band-${band.id}`}
-								className="my-1 px-3 py-1 border border-amber-400 rounded dark:border-gray-700">
+							<div key={`band-${band.id}`} className="">
 								<input
 									id="checkbox"
 									type="checkbox"
@@ -317,7 +315,7 @@ export const EditConcert = () => {
 					<button
 						type="submit"
 						onClick={handleSubmit}
-						className="bg-amber-600 py-1 px-2 text-lg placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50">
+						className="bg-amber-600 py-1 px-2 text-lg text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50">
 						Submit Concert
 					</button>
 				</fieldset>

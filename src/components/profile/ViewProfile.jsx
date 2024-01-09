@@ -16,7 +16,7 @@ export const ViewProfile = ({ currentUser }) => {
 	}, [Editing])
 
 	return (
-		<div className="bg-slate-300">
+		<div className="bg-blue-400 mx-auto content-center text-center w-1/3 opacity-90 my-10 rounded-2xl border-black border-4 shadow-xl">
 			{Editing ? (
 				<EditProfile
 					myProfile={myProfile}

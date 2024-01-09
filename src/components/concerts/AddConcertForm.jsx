@@ -91,7 +91,7 @@ export const AddConcertForm = () => {
 	}
 
 	return (
-		<div className="add-concert-container bg-slate-400 mx-auto content-center text-center w-1/2">
+		<div className="add-concert-container bg-slate-400 mx-auto content-center text-center w-1/2 rounded-xl shadow-lg">
 			<dialog
 				className="manage-add-bands rounded-2xl w-1/5 bg-slate-300 shadow-xl"
 				ref={addBand}>
@@ -139,11 +139,11 @@ export const AddConcertForm = () => {
 			<h2 className="add-concert-header text-3xl font-semibold py-3">
 				Add Concert
 			</h2>
-			<div className="time-pickers-container flex justify-around my-3">
+			<div className="time-pickers-container flex justify-around pt-1 my-3">
 				<LocalizationProvider dateAdapter={AdapterDayjs}>
 					<DemoContainer components={["DateTimePicker"]}>
 						<DateTimePicker
-							className=" bg-amber-600 py-1 text-lg placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50"
+							className=" bg-amber-600 py-1 text-lg placeholder:text-center placeholder:text-black rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50"
 							label="Doors Open"
 							selected={doorsOpen}
 							onChange={setDoorsOpen}
@@ -228,7 +228,7 @@ export const AddConcertForm = () => {
 						{bands.map((band) => (
 							<div
 								key={`band-${band.id}`}
-								className="my-1 px-3 py-1 border border-amber-400 rounded dark:border-gray-700">
+								className="my-1 px-3 py-1 border bg-amber-400 rounded dark:border-gray-700">
 								<label htmlFor="checkbox">{band.name}</label>
 								<input
 									id="checkbox"
