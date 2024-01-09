@@ -11,8 +11,8 @@ export const FavoriteConcerts = () => {
 	const [allFavorites, setAllFavorites] = useState([])
 	const [filteredFavorites, setFilteredFavorites] = useState([])
 	const [selectedDate, setSelectedDate] = useState(null)
+	const [selectedVenue, setSelectedVenue] = useState(null)
 	const [allVenues, setAllVenues] = useState([])
-	const [venueSelection, setVenueSelection] = useState([])
 	const navigate = useNavigate()
 
 	const fetchAndSetCurrentUserFavorites = () => {
@@ -31,20 +31,27 @@ export const FavoriteConcerts = () => {
 	}, [])
 
 	useEffect(() => {
-		if (venueSelection > 0) {
-			const favoritesAtVenue = allFavorites.filter(
-				(favorite) => favorite.concert.venue.id === parseInt(venueSelection)
-			)
-			setFilteredFavorites(favoritesAtVenue)
-		} else {
-			setFilteredFavorites(allFavorites)
-		}
-	}, [allFavorites, venueSelection])
-
-	useEffect(() => {
-		if (selectedDate) {
+		if (parseInt(selectedVenue) && selectedDate) {
 			const reactDate = new Date(selectedDate)
-			const filteredFavoritesByDate = allFavorites.filter(
+			const filteredConcerts = allFavorites.filter(
+				(favorite) =>
+					favorite.concert.venue.id === parseInt(selectedVenue) &&
+					reactDate.getFullYear() ===
+						new Date(favorite.concert.show_starts).getFullYear() &&
+					reactDate.getMonth() ===
+						new Date(favorite.concert.show_starts).getMonth() &&
+					reactDate.getDate() ===
+						new Date(favorite.concert.show_starts).getDate()
+			)
+			setFilteredFavorites(filteredConcerts)
+		} else if (parseInt(selectedVenue)) {
+			const filteredConcerts = allFavorites.filter(
+				(favorite) => favorite.concert.venue.id === parseInt(selectedVenue)
+			)
+			setFilteredFavorites(filteredConcerts)
+		} else if (selectedDate) {
+			const reactDate = new Date(selectedDate)
+			const filteredConcerts = allFavorites.filter(
 				(favorite) =>
 					reactDate.getFullYear() ===
 						new Date(favorite.concert.show_starts).getFullYear() &&
@@ -53,54 +60,56 @@ export const FavoriteConcerts = () => {
 					reactDate.getDate() ===
 						new Date(favorite.concert.show_starts).getDate()
 			)
-			setFilteredFavorites(filteredFavoritesByDate)
+			setFilteredFavorites(filteredConcerts)
 		} else {
 			setFilteredFavorites(allFavorites)
 		}
-	}, [allFavorites, selectedDate])
+	}, [selectedVenue, selectedDate, allFavorites])
 
 	return (
-		<>
-			<div className="p-1 min-w-full bg-slate-500">
-				<DatePicker
-					onChange={(date) => setSelectedDate(date)}
-					selected={selectedDate}
-					dateFormat="dd/MM/yyyy"
+		<div className="favorites-container">
+			<div className="headers-container flex justify-around items-center px-5">
+				<div className="px-1">
+					<DatePicker
+						className="bg-slate-200  py-1 text-lg placeholder:text-center placeholder:text-gray-600 rounded-lg hover:cursor-pointer placeholder:italic placeholder:text-bold text-center border-black border-2 hover:bg-slate-300 duration-200 delay-50"
+						onChange={(date) => setSelectedDate(date)}
+						selected={selectedDate}
+						dateFormat="dd/MM/yyyy"
+						placeholderText="Select Date"
+					/>
+					<button
+						onClick={() => setSelectedDate(null)}
+						className="bg-slate-200 outline-1 text-lg px-5 py-1 border-black border-2 rounded-lg transition-color hover:bg-slate-300 duration-200 delay-50">
+						Reset Date Filter
+					</button>
+				</div>
+				<FilterConcertsByVenue
+					setSelectedVenue={setSelectedVenue}
+					allVenues={allVenues}
 				/>
-				<button onClick={() => setSelectedDate(null)}>Reset Filters</button>
 			</div>
-			<FilterConcertsByVenue
-				setVenueSelection={setVenueSelection}
-				allVenues={allVenues}
-			/>
 			<div className="py-3">
-				<h2
-					className="bg-zinc-400 bg-opacity-80 m-auto max-w-min
-     rounded-md text-center text-3xl font-sans underline font-extrabold">
-					My Favorites
-				</h2>
 				<article className="">
 					{filteredFavorites.map((favorite) => {
 						return (
 							<section
 								key={favorite.id}
-								className="flex justify-between p-5 mx-8 my-5 border-4 scale-100
-                    bg-green-100 bg-opacity-90 border-green-500 rounded-xl
-                    hover:scale-110 transition-transform duration-300"
+								className="flex justify-between items-center p-5 mx-4 my-3 border-4 scale-[.80]
+								bg-amber-500 bg-opacity-90 border-amber-600 rounded-xl
+								hover:scale-[.90] hover:cursor-pointer transition-transform duration-500 text-center text-xl font-semibold"
 								onClick={() => {
 									navigate(`/${favorite.concert.id}`)
 								}}>
-								<div className="pt-1.5">{favorite.concert.band.name}</div>
-								<div className="pt-2">{favorite.concert.venue.name}</div>
-								<div className="pt-2">
+								<div className="">{favorite.concert.band.name}</div>
+								<div className="">{favorite.concert.venue.name}</div>
+								<div className="">
 									{formatFullDateTime(favorite.concert.show_starts)}
 								</div>
-								<div className=""></div>
 							</section>
 						)
 					})}
 				</article>
 			</div>
-		</>
+		</div>
 	)
 }
