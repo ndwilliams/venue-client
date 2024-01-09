@@ -25,69 +25,73 @@ export const EditProfile = ({ myProfile, setEditing }) => {
 	}
 
 	return (
-		<form className="edit-profile-form">
+		<form className="edit-profile-form content-center text-center mx-auto">
 			<fieldset className="fieldset">
-				<label>First Name:</label>
+				<label className="my-2 font-semibold text-lg">First Name:</label>
 				<input
 					name="first_name"
 					value={editedUser.first_name}
 					type="text"
 					className="first-name-input placeholder:italic
-                    placeholder:text-slate-400 block bg-white 
-                    w-full border border-slate-300 rounded-md 
-                    py-2 pl-9 pr-3 shadow-sm focus:outline-none 
-                    focus:border-sky-500 focus:ring-sky-500 
-                    focus:ring-1 sm:text-sm my-5"
+                    placeholder:text-slate-400 block bg-slate-200
+                    w-1/2 border-black border-2 rounded-lg 
+                    py-1 px-2 shadow-sm focus:outline-none 
+                    focus:border-sky-500 focus:ring-blue-800 
+                    focus:ring-1 m-auto my-2 text-lg text-center"
 					onChange={handleChange}
 				/>
 			</fieldset>
 			<fieldset className="fieldset">
-				<label>Last Name:</label>
+				<label className="my-2 font-semibold text-lg">Last Name:</label>
 				<input
 					name="last_name"
 					value={editedUser.last_name}
 					type="text"
 					className="last-name-input placeholder:italic
-                    placeholder:text-slate-400 block bg-white 
-                    w-full border border-slate-300 rounded-md 
-                    py-2 pl-9 pr-3 shadow-sm focus:outline-none 
-                    focus:border-sky-500 focus:ring-sky-500 
-                    focus:ring-1 sm:text-sm my-5"
+                    placeholder:text-slate-400 block bg-slate-200
+                    w-1/2 border-black border-2 rounded-lg 
+                    py-1 px-2 shadow-sm focus:outline-none 
+                    focus:border-sky-500 focus:ring-blue-800 
+                    focus:ring-1 m-auto my-2 text-lg text-center"
 					onChange={handleChange}
 				/>
 			</fieldset>
 			<fieldset className="fieldset">
-				<label>Username: </label>
+				<label className="my-2 font-semibold text-lg">Username: </label>
 				<input
 					name="username"
 					value={editedUser.username}
 					type="text"
 					className="username-input placeholder:italic
-                    placeholder:text-slate-400 block bg-white 
-                    w-full border border-slate-300 rounded-md 
-                    py-2 pl-9 pr-3 shadow-sm focus:outline-none 
-                    focus:border-sky-500 focus:ring-sky-500 
-                    focus:ring-1 sm:text-sm my-5"
+                    placeholder:text-slate-400 block bg-slate-200
+                    w-1/2 border-black border-2 rounded-lg 
+                    py-1 px-2 shadow-sm focus:outline-none 
+                    focus:border-sky-500 focus:ring-blue-800 
+                    focus:ring-1 m-auto my-2 text-lg text-center"
 					onChange={handleChange}
 				/>
 			</fieldset>
 			<fieldset className="fieldset">
-				<label>Email: </label>
+				<label className="my-2 font-semibold text-lg">Email: </label>
 				<input
 					name="email"
 					value={editedUser.email}
 					type="text"
-					className="email-input placeholder:italic
-                    placeholder:text-slate-400 block bg-white 
-                    w-full border border-slate-300 rounded-md 
-                    py-2 pl-9 pr-3 shadow-sm focus:outline-none 
-                    focus:border-sky-500 focus:ring-sky-500 
-                    focus:ring-1 sm:text-sm my-5"
+					className="placeholder:italic
+                    placeholder:text-slate-400 block bg-slate-200
+                    w-1/2 border-black border-2 rounded-lg 
+                    py-1 px-2 shadow-sm focus:outline-none 
+                    focus:border-sky-500 focus:ring-blue-800 
+                    focus:ring-1 m-auto my-2 text-lg text-center"
 					onChange={handleChange}
 				/>
 			</fieldset>
 			<div>
-				<button className="save-button" onClick={handleSaveChanges}>
+				<button
+					onClick={handleSaveChanges}
+					className="save-button bg-amber-600 py-1 px-2 text-lg placeholder:text-center
+					placeholder:text-gray-600 rounded-lg hover:cursor-pointer 
+					text-center border-black border-2 hover:bg-amber-400 duration-200 delay-50 my-3">
 					Save Changes
 				</button>
 			</div>

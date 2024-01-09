@@ -27,7 +27,7 @@ export const Login = ({ setUser }) => {
 	}
 
 	return (
-		<main className="bg-gray-100 min-h-screen flex items-center justify-center">
+		<main>
 			<dialog className="dialog dialog--auth" ref={Dialog}>
 				<div>Username or Password is not valid</div>
 				<button className="close" onClick={() => Dialog.current.close()}>
@@ -35,11 +35,11 @@ export const Login = ({ setUser }) => {
 				</button>
 			</dialog>
 
-			<section className="bg-white p-8 py-10 rounded-lg shadow-lg w-1/2">
-				<h1 className="text-center text-5xl m-3 pb-3">Venue</h1>
+			<section className="text-center">
+				<h1 className="text-center text-5xl m-4 p-4">Venue</h1>
 				<form
-					className="mx-auto text-center content-center justify-center bg-slate-400
-				bg-opacity-70 py-3 rounded-xl border-black border-4 shadow-lg"
+					className="mx-auto w-1/2 text-center content-center justify-center bg-slate-400
+				bg-opacity-80 py-3 rounded-xl border-black border-4 shadow-lg"
 					onSubmit={handleLogin}>
 					<h2 className="text-4xl my-3">Login</h2>
 					<fieldset className="m-1">
@@ -64,7 +64,7 @@ export const Login = ({ setUser }) => {
 							<div className="control">
 								<input
 									id="inputPassword"
-									type="text"
+									type="password"
 									ref={password}
 									className="p-1 rounded-md shadow placeholder:italic border border-slate-400 focus:border-sky-500"
 									placeholder="Password"
