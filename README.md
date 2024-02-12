@@ -2,7 +2,7 @@
 
 ## Description
 
-Venue is a full-stack platform where concert goers can extensively search through all the concerts occuring in Nashville on a given night. The application prevents Nashvillians from missing shows from their favorite artists, allows users to discover new favorites, and supports local, independently owned venues by providing a larger market presence. Concert goers can filter shows by date and venue, and add new venues or shows when announced. Venue's server-side is built with Django Rest Framework/Python and React and Tailwind CSS on client-side to provide full CRUD functionality, secure user authentication, and a smooth and efficient user experience.
+Venue is a comprehensive concert discovery platform designed to empower users in Nashville to explore and attend live music events seamlessly. Venue ensures that concert enthusiasts stay informed about upcoming shows featuring their favorite artists, discover new talent, and contribute to the thriving local music scene. Our platform is built using Django Rest Framework/Python for server-side functionalities, coupled with React and Tailwind CSS for an immersive and intuitive user experience.
 
 ## Wireframe & ERD
 
@@ -10,10 +10,12 @@ Venue is a full-stack platform where concert goers can extensively search throug
 
 [DBDiagram ERD](https://dbdiagram.io/d/Venue-65528c5d7d8bbd64651b16a9)
 
-## Description of User Capablities
+## Features
 
-* Viewing concerts that are ordered by date and start time.
-  * Filtering concerts by date and venue.
+### User Features
+
+* **Concert Exploration**: Users can browse through a curated list of concerts in Nashville, organized by date and start time, to plan their entertainment schedule effectively.
+* **Advanced Filtering**: Venue offers robust filtering options, allowing users to refine their search based on date and venue preferences, ensuring they find events that align with their interests.
 * Favoriting/unfavoriting concerts so that they are saved/deleted from their Favorites.
 * Editing and viewing their own profile information.
 *  Viewing favorites and filtering favorites by date/venue.
