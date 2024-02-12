@@ -16,16 +16,20 @@ Venue is a comprehensive concert discovery platform designed to empower users in
 
 * **Concert Exploration**: Users can browse through a curated list of concerts in Nashville, organized by date and start time, to plan their entertainment schedule effectively.
 * **Advanced Filtering**: Venue offers robust filtering options, allowing users to refine their search based on date and venue preferences, ensuring they find events that align with their interests.
-* Favoriting/unfavoriting concerts so that they are saved/deleted from their Favorites.
-* Editing and viewing their own profile information.
-*  Viewing favorites and filtering favorites by date/venue.
+* **Favorites Management**: Users have the ability to mark concerts as favorites, enabling them to easily track and manage their preferred events within the platform.
+* **Profile Management**: Venue enables users to edit and view their profile information, providing a personalized experience tailored to their preferences.
+*  **Favorite Filtering**: sers can filter their favorite concerts by date and venue, streamlining the process of revisiting and planning future attendance.
 
-## Description of Admin Capablities
+### Admin Features
 
-* All capabilities that non-admin users have.
-* Adding and editing concerts/venues with various bands/openers.
-  * Hiding concerts/venues so that they are not visible to non-admin users.
-* Adding bands.
+* **Enhanced User Capabilties**: Admins possess all the functionalities available to non-admin users, ensuring a seamless experience across the platform.
+* **Concert and Venue Management**: Admins have the authority to add and edit concerts and venues, including details such as featured bands and openers, ensuring comprehensive event listings.
+* **Visibility Control**: Admins can hide specific concerts or venues from non-admin users, providing flexibility in managing the platform's content and maintaining relevancy.
+* **Band Management**: Admins can add bands to the platform, enriching the concert database and offering users access to a diverse range of musical experiences.
+
+### Get Involved
+
+Venue welcomes contributions from developers and music enthusiasts alike. Whether you're interested in enhancing features, improving performance, or expanding the concert database, we invite you to join our community and help shape the future of live music discovery.
 
 ## Screenshots
 <img width="1725" alt="Screenshot 2024-02-12 at 4 58 02 PM" src="https://github.com/ndwilliams/venue-client/assets/138155020/fd39abed-d73d-4a30-bfcb-ce57938ba85a">
