@@ -31,6 +31,17 @@ Venue is a comprehensive concert discovery platform designed to empower users in
 
 Venue welcomes contributions from developers and music enthusiasts alike. Whether you're interested in enhancing features, improving performance, or expanding the concert database, we invite you to join our community and help shape the future of live music discovery.
 
+## Installation
+* First, make sure that the server-side is running in the debugger mode
+  * If server-side is not running visit (https://github.com/ndwilliams/venue-project) and follow ReadMe instructions 
+* In a terminal window type `git clone git@github.com:ndwilliams/venue-client.git`
+* cd to `venue-client`
+* type the command `npm install`
+* type the command `npm run dev`
+* visit the webpage address after `Local: `
+* <img width="580" alt="Screenshot 2024-02-14 at 2 45 51 PM" src="https://github.com/ndwilliams/venue-client/assets/138155020/5f14c48b-8c13-45be-ae21-ae57fcdd5fbb">
+* Create an account as an Admin and/or as a Non-Admin and Login
+
 ## Screenshots
 <img width="1725" alt="Screenshot 2024-02-12 at 4 58 02 PM" src="https://github.com/ndwilliams/venue-client/assets/138155020/fd39abed-d73d-4a30-bfcb-ce57938ba85a">
 <img width="1704" alt="Screenshot 2024-02-12 at 5 21 55 PM" src="https://github.com/ndwilliams/venue-client/assets/138155020/ff2f627e-00d2-4539-8a4b-d05818ed7b4f">
