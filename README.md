@@ -6,7 +6,7 @@ Venue is a comprehensive concert discovery platform designed to empower users in
 
 ## Wireframe & ERD
 
-[Figma Wireframe](https://miro.com/app/board/uXjVMnOEfOU=/?share_link_id=741034550286)
+[Miro Wireframe](https://miro.com/app/board/uXjVMnOEfOU=/?share_link_id=741034550286)
 
 [DBDiagram ERD](https://dbdiagram.io/d/Venue-65528c5d7d8bbd64651b16a9)
 
