@@ -2,7 +2,7 @@
 
 ## Description
 
-Venue is a comprehensive concert discovery platform designed to empower users in Nashville to explore and attend live music events seamlessly. Venue ensures that concert enthusiasts stay informed about upcoming shows featuring their favorite artists, discover new talent, and contribute to the thriving local music scene. Our platform is built using Django Rest Framework/Python for server-side functionalities, coupled with React and Tailwind CSS for an immersive and intuitive user experience.
+Venue is a comprehensive concert discovery platform designed to empower users in Nashville to explore and attend live music events seamlessly. Venue ensures that concert enthusiasts stay informed about upcoming shows featuring their favorite artists, discover new talent, and contribute to the thriving local music scene. Our platform is built using Django Rest Framework/Python for server-side functionalities, coupled with ReactJS and Tailwind CSS for an immersive and intuitive user experience.
 
 ## Wireframe & ERD
 
