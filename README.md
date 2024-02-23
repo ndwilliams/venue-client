@@ -18,7 +18,7 @@ Venue is a comprehensive concert discovery platform designed to empower users in
 * **Advanced Filtering**: Venue offers robust filtering options, allowing users to refine their search based on date and venue preferences, ensuring they find events that align with their interests.
 * **Favorites Management**: Users have the ability to mark concerts as favorites, enabling them to easily track and manage their preferred events within the platform.
 * **Profile Management**: Venue enables users to edit and view their profile information, providing a personalized experience tailored to their preferences.
-*  **Favorite Filtering**: sers can filter their favorite concerts by date and venue, streamlining the process of revisiting and planning future attendance.
+* **Favorite Filtering**: Users can filter their favorite concerts by date and venue, streamlining the process of revisiting and planning future attendance.
 
 ### Admin Features
 
